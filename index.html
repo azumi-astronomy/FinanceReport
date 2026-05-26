@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Finance Research Reports</title>
+<style>
+:root{--bg:#0b0e14;--sf:#111827;--s2:#1a2235;--bd:#263352;--tx:#e8edf5;--mu:#6b7a99;--bl:#3b82f6;--or:#f97316;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-serif;
+      padding:28px 20px 60px;max-width:860px;margin:0 auto;}
+.hdr{background:linear-gradient(135deg,#0c1a3e,#111827);border:1px solid var(--bd);
+      border-radius:12px;padding:26px 28px;margin-bottom:22px;}
+.hdr h1{font-size:21px;font-weight:800;color:#fff;margin-bottom:5px;}
+.hdr p{color:var(--mu);font-size:11px;line-height:1.6;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.stat{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:14px;}
+.stat .n{font-size:22px;font-weight:800;color:var(--bl);margin-bottom:3px;}
+.stat .l{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;}
+table{width:100%;border-collapse:collapse;background:var(--sf);border:1px solid var(--bd);border-radius:10px;overflow:hidden;}
+th{background:var(--s2);color:var(--mu);font-size:10px;text-transform:uppercase;
+    letter-spacing:.1em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--bd);}
+td{padding:12px 14px;border-bottom:1px solid var(--bd);font-size:13px;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--s2);}
+td a{color:var(--bl);text-decoration:none;}
+td a:hover{text-decoration:underline;}
+.btn-open{background:var(--bl);color:#fff!important;padding:5px 14px;border-radius:6px;
+           font-size:11px;font-weight:700;display:inline-block;}
+.btn-open:hover{opacity:.85;text-decoration:none!important;}
+.badge-new{background:#2d1100;color:var(--or);border:1px solid var(--or);border-radius:10px;
+            font-size:9px;font-weight:700;padding:1px 7px;margin-left:6px;vertical-align:middle;}
+.foot{margin-top:18px;color:var(--mu);font-size:10px;text-align:center;}
+@media(max-width:540px){.stats{grid-template-columns:1fr 1fr;}body{padding:16px 12px 40px;}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <h1>📊 Finance Research Reports</h1>
+  <p>
+    グローバル市場 日次株式リサーチレポート｜毎日 8:00 JST 自動生成<br/>
+    株式（日本・米国）｜貴金属｜暗号資産｜日本株10選・米国株10選
+  </p>
+</div>
+<div class="stats">
+  <div class="stat"><div class="n">2</div><div class="l">総レポート数</div></div>
+  <div class="stat"><div class="n" style="font-size:13px;">2026年05月27日</div><div class="l">最新レポート</div></div>
+  <div class="stat"><div class="n" style="font-size:13px;">2026年05月26日</div><div class="l">最初のレポート</div></div>
+</div>
+<table>
+  <thead><tr><th>日付</th><th>アクション</th></tr></thead>
+  <tbody>
+      <tr data-date="20260527"><td><a href="research_report_20260527.html">2026年05月27日（水）<span class="badge-new">NEW</span></a></td><td><a href="research_report_20260527.html" class="btn-open">開く →</a></td></tr>
+      <tr data-date="20260526"><td><a href="research_report_20260526.html">2026年05月26日（火）</a></td><td><a href="research_report_20260526.html" class="btn-open">開く →</a></td></tr>
+  </tbody>
+</table>
+<div class="foot">
+  自動生成 by Claude Sonnet 4.6（Anthropic）｜本レポートは投資推奨ではありません。投資は自己責任でお願いします。
+</div>
+</body>
+</html>
