@@ -1,0 +1,54 @@
+name: 📊 Daily Finance Research Report
+
+# ─────────────────────────────────────────────────
+#  毎日 23:00 UTC = 翌 08:00 JST に自動実行
+#  手動実行は GitHub UI の "Run workflow" から可能
+# ─────────────────────────────────────────────────
+on:
+  schedule:
+    - cron: '0 23 * * *'   # 23:00 UTC = 08:00 JST
+  workflow_dispatch:        # 手動トリガー（テスト・祝日補完用）
+
+permissions:
+  contents: write           # コミット・プッシュに必要
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30     # 最大 30 分（超過時は自動キャンセル）
+
+    steps:
+      # 1. リポジトリをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    # 全履歴を取得（index.html の再構築に必要）
+
+      # 2. Python 環境を準備
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      # 3. Anthropic SDK をインストール
+      - name: Install dependencies
+        run: pip install anthropic
+
+      # 4. レポートを生成（ANTHROPIC_API_KEY は GitHub Secret から注入）
+      - name: Generate daily report
+        run: python generate_report.py
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      # 5. 生成ファイルをコミット & プッシュ
+      - name: Commit and push
+        run: |
+          git config user.name  "finance-report-bot"
+          git config user.email "finance-report-bot@users.noreply.github.com"
+          git add -A
+          git status
+          # 変更がある場合のみコミット
+          git diff --staged --quiet || \
+            git commit -m "📊 Daily report $(date -u +'%Y-%m-%d') [auto-generated]"
+          git push

@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>グローバル市場 株式リサーチレポート — 2026年5月26日</title>
+<style>
+:root{
+  --bg:#0b0e14;--surface:#111827;--surface2:#1a2235;--surface3:#222d42;
+  --border:#263352;--text:#e8edf5;--muted:#6b7a99;
+  --green:#22c55e;--green-dim:#0a2e18;
+  --red:#ef4444;--red-dim:#2c0d0d;
+  --yellow:#f59e0b;--yellow-dim:#2e1f05;
+  --blue:#3b82f6;--blue-dim:#0c1d40;
+  --purple:#a78bfa;--purple-dim:#1e1040;
+  --orange:#f97316;--orange-dim:#2d1100;
+  --teal:#14b8a6;--teal-dim:#042928;
+  --accent:#1d4ed8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;line-height:1.65;padding:20px 24px 48px;}
+
+/* === HEADER === */
+.rpt-header{background:linear-gradient(135deg,#0c1a3e 0%,#111827 100%);border:1px solid var(--border);border-radius:12px;padding:28px 32px;margin-bottom:24px;}
+.rpt-header .eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.rpt-header h1{font-size:26px;font-weight:800;color:#fff;margin-bottom:6px;}
+.rpt-header .meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;}
+.meta-item{font-size:11px;color:var(--muted);}
+.meta-item strong{color:var(--text);}
+
+/* === BADGES === */
+.badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;letter-spacing:.05em;vertical-align:middle;margin-left:8px;}
+.badge-fact{background:#0a2e18;color:#22c55e;border:1px solid #22c55e;}
+.badge-est{background:#2e1f05;color:#f59e0b;border:1px solid #f59e0b;}
+.badge-risk{background:#2c0d0d;color:#ef4444;border:1px solid #ef4444;}
+.badge-hot{background:#2d1100;color:#f97316;border:1px solid #f97316;}
+.badge-new{background:#1e1040;color:#a78bfa;border:1px solid #a78bfa;}
+
+/* === SECTION === */
+.section{margin-bottom:32px;}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.section-head h2{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:8px;flex:1;}
+.section-icon{font-size:18px;}
+
+/* === GRID === */
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px;}
+@media(max-width:960px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.grid-4,.grid-3,.grid-2{grid-template-columns:1fr}}
+
+/* === INDEX CARDS === */
+.idx-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+.idx-card .ico{font-size:16px;margin-bottom:6px;}
+.idx-card .name{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;}
+.idx-card .val{font-size:20px;font-weight:700;margin-bottom:2px;}
+.idx-card .chg{font-size:12px;font-weight:600;}
+.idx-card .note{font-size:10px;color:var(--muted);margin-top:4px;}
+.up{color:var(--green);}
+.dn{color:var(--red);}
+.fl{color:var(--yellow);}
+
+/* === EVENT CARDS === */
+.ev{background:var(--surface);border:1px solid var(--border);border-left:3px solid;border-radius:8px;padding:14px 16px;margin-bottom:10px;}
+.ev.crit{border-left-color:var(--red);}
+.ev.pos{border-left-color:var(--green);}
+.ev.warn{border-left-color:var(--yellow);}
+.ev.info{border-left-color:var(--blue);}
+.ev-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.ev-tag{font-size:9px;font-weight:700;letter-spacing:.1em;padding:2px 8px;border-radius:4px;text-transform:uppercase;white-space:nowrap;}
+.tag-geo{background:var(--red-dim);color:var(--red);}
+.tag-mon{background:var(--blue-dim);color:var(--blue);}
+.tag-ai{background:var(--purple-dim);color:var(--purple);}
+.tag-oil{background:var(--yellow-dim);color:var(--yellow);}
+.tag-macro{background:var(--surface3);color:var(--muted);}
+.tag-crypto{background:var(--orange-dim);color:var(--orange);}
+.tag-pm{background:var(--teal-dim);color:var(--teal);}
+.ev-title{font-weight:700;font-size:13px;}
+.ev-body{color:#b8c4d8;font-size:12px;line-height:1.75;}
+.ev-impact{margin-top:8px;font-size:11px;display:flex;align-items:flex-start;gap:6px;}
+.ev-impact .lbl{color:var(--muted);white-space:nowrap;font-weight:600;}
+.fact-box{background:var(--green-dim);border:1px solid var(--green);border-radius:6px;padding:6px 10px;font-size:11px;color:var(--green);margin-top:6px;}
+.est-box{background:var(--yellow-dim);border:1px solid var(--yellow);border-radius:6px;padding:6px 10px;font-size:11px;color:var(--yellow);margin-top:6px;}
+.risk-box{background:var(--red-dim);border:1px solid var(--red);border-radius:6px;padding:6px 10px;font-size:11px;color:var(--red);margin-top:6px;}
+
+/* === STOCK CARDS === */
+.stock-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;position:relative;overflow:hidden;}
+.stock-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.stock-card.atk::before{background:linear-gradient(90deg,var(--red),var(--orange));}
+.stock-card.mid::before{background:linear-gradient(90deg,var(--blue),var(--purple));}
+.stock-card.def::before{background:linear-gradient(90deg,var(--green),var(--teal));}
+.sc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:8px;}
+.sc-ticker{font-size:15px;font-weight:800;color:var(--text);}
+.sc-code{font-size:10px;color:var(--muted);margin-top:2px;}
+.sc-mkt{font-size:9px;padding:2px 7px;border-radius:4px;font-weight:700;}
+.mkt-prime{background:#0c1d40;color:var(--blue);}
+.mkt-std{background:#1e1040;color:var(--purple);}
+.mkt-growth{background:#0a2e18;color:var(--green);}
+.mkt-nasdaq{background:#2d1100;color:var(--orange);}
+.mkt-nyse{background:#2e1f05;color:var(--yellow);}
+.sc-name{font-size:11px;color:var(--muted);margin-bottom:8px;}
+.sc-price{font-size:18px;font-weight:700;margin-bottom:2px;}
+.sc-change{font-size:11px;font-weight:600;margin-bottom:10px;}
+.sc-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;}
+.sc-kv{background:var(--surface2);border-radius:4px;padding:4px 8px;font-size:10px;}
+.sc-kv .k{color:var(--muted);}
+.sc-kv .v{font-weight:600;color:var(--text);}
+.sc-section{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:8px 0 4px;}
+.sc-body{font-size:11px;color:#b8c4d8;line-height:1.7;}
+.sc-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
+.sc-tag{font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid;}
+.sc-tag.fact{border-color:var(--green);color:var(--green);}
+.sc-tag.est{border-color:var(--yellow);color:var(--yellow);}
+.sc-tag.risk{border-color:var(--red);color:var(--red);}
+.num{font-size:12px;font-weight:800;color:var(--orange);}
+
+/* === CLASSIFICATION === */
+.cls-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;}
+@media(max-width:720px){.cls-grid{grid-template-columns:1fr;}}
+.cls-col{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.cls-col h3{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.cls-atk h3{color:var(--red);}
+.cls-mid h3{color:var(--blue);}
+.cls-def h3{color:var(--green);}
+.cls-item{padding:7px 0;border-bottom:1px solid var(--border);font-size:11px;display:flex;align-items:flex-start;gap:8px;}
+.cls-item:last-child{border-bottom:none;}
+.cls-item .ticker{font-weight:700;width:80px;flex-shrink:0;}
+.cls-item .desc{color:var(--muted);}
+
+/* === METER === */
+.meter-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.meter-lbl{width:130px;font-size:11px;color:var(--muted);flex-shrink:0;}
+.meter-bar{flex:1;background:var(--surface3);border-radius:4px;height:7px;overflow:hidden;}
+.meter-fill{height:100%;border-radius:4px;}
+.meter-val{width:44px;font-size:11px;font-weight:600;text-align:right;}
+
+/* === SUMMARY BOX === */
+.summary{background:var(--blue-dim);border:1px solid var(--accent);border-radius:10px;padding:18px 22px;margin-bottom:24px;}
+.summary h3{color:var(--blue);font-size:11px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+.summary p{color:#b8c4d8;font-size:13px;line-height:1.8;}
+
+/* === TABLE === */
+.tbl{width:100%;border-collapse:collapse;}
+.tbl th{background:var(--surface2);color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em;padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--border);font-size:11px;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:var(--surface2);}
+.pill{display:inline-block;padding:1px 8px;border-radius:10px;font-size:10px;font-weight:700;}
+.pill-pos{background:var(--green-dim);color:var(--green);}
+.pill-neg{background:var(--red-dim);color:var(--red);}
+.pill-neu{background:var(--surface3);color:var(--muted);}
+.pill-warn{background:var(--yellow-dim);color:var(--yellow);}
+
+/* === DIVIDER === */
+.divider{border:none;border-top:1px dashed var(--border);margin:24px 0;}
+
+/* === DISCLAIMER === */
+.disc{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:10px;color:var(--muted);line-height:1.7;margin-top:32px;}
+
+/* === SOURCE === */
+.src-list{list-style:none;display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;}
+.src-list li a{color:var(--blue);text-decoration:none;font-size:10px;}
+.src-list li a:hover{text-decoration:underline;}
+.src-list li::before{content:'↗ ';color:var(--muted);}
+
+/* === FOOTER === */
+.footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding-top:14px;border-top:1px solid var(--border);color:var(--muted);font-size:10px;margin-top:24px;}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="rpt-header">
+  <div class="eyebrow">Global Equity Research — Institutional Grade Analysis</div>
+  <h1>グローバル市場 株式リサーチレポート</h1>
+  <p style="color:#94a3b8;font-size:12px;margin-top:6px;">株式（日本・米国）｜貴金属｜暗号資産｜特筆銘柄20選｜直近24時間の事象を重点分析</p>
+  <div class="meta">
+    <div class="meta-item">作成日：<strong>2026年5月26日（火）</strong></div>
+    <div class="meta-item">対象市場：<strong>東証全市場 / NYSE / NASDAQ / 暗号資産 / 貴金属</strong></div>
+    <div class="meta-item">分析基準時刻：<strong>日本時間 2026年5月26日</strong></div>
+    <div class="meta-item">レポートタイプ：<strong>短期〜中期 リサーチ（非投資推奨）</strong></div>
+  </div>
+</div>
+
+<!-- ===== 凡例 ===== -->
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:24px;display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
+  <span style="font-size:10px;color:var(--muted);font-weight:700;">凡例：</span>
+  <span class="badge badge-fact">事実</span><span style="font-size:10px;color:var(--muted);">公開情報・確認済み</span>
+  <span class="badge badge-est">推測・予測</span><span style="font-size:10px;color:var(--muted);">アナリスト予想・観測</span>
+  <span class="badge badge-risk">リスク</span><span style="font-size:10px;color:var(--muted);">下落・注意材料</span>
+  <span class="badge badge-hot">注目</span><span style="font-size:10px;color:var(--muted);">テーマ・材料集中</span>
+</div>
+
+<!-- ===== エグゼクティブサマリー ===== -->
+<div class="summary">
+  <h3>エグゼクティブ・サマリー（24時間重点）</h3>
+  <p>
+    本日（5/26）最大の変数は<strong>①米・イラン停戦延長60日・Hormuz再開</strong>（地政学リスク緩和→原油下落・株式上昇）、
+    ②<strong>Kevin Warsh 新FRB議長就任</strong>（インフレ3.8%下で利下げ困難・利上げ再検討リスク）、
+    ③<strong>SoftBankが5日間で+40%の史上最高値</strong>（OpenAI IPO申請観測、時価総額¥40兆超）の三軸。
+    日経平均は半導体株の利確で▼162円(−0.25%)の64,996円と4日ぶり反落だが、SoftBankが下支え。
+    米国市場はメモリアルデー明け再開、先物は上昇発進。
+    貴金属は<strong>金$4,579で最高値圏</strong>・銀が$75.68で−3.07%調整。
+    BTC/ETHは中東の米・イスラエル空爆にも<strong>価格下落せず底堅い</strong>($76,754/$2,114)。
+    今週の最重要イベントは<strong>5/27: Marvell・Salesforce決算</strong>、<strong>5/28: PCE物価指数・Q1GDP第2次速報</strong>。
+  </p>
+</div>
+
+<!-- ===== 主要指数 ===== -->
+<div class="section">
+  <div class="section-head"><span class="section-icon">📊</span><h2>主要指数スナップショット — 2026年5月26日</h2></div>
+
+  <div style="font-size:10px;color:var(--muted);margin-bottom:8px;">【日本・アジア】</div>
+  <div class="grid-4">
+    <div class="idx-card">
+      <div class="name">日経平均</div>
+      <div class="val dn">64,996</div>
+      <div class="chg dn">▼ −162.10 (−0.25%)</div>
+      <div class="note">4日ぶり反落｜半導体利確｜SBG下支え</div>
+    </div>
+    <div class="idx-card">
+      <div class="name">TOPIX</div>
+      <div class="val dn">3,938.46</div>
+      <div class="chg dn">▼ −4.11 (−0.10%)</div>
+      <div class="note">4日ぶり反落｜広範な利確</div>
+    </div>
+    <div class="idx-card">
+      <div class="name">東証グロース250</div>
+      <div class="val fl">—</div>
+      <div class="chg fl">防衛・AI関連テーマ継続</div>
+      <div class="note">VNX・テラドローン等に注目</div>
+    </div>
+    <div class="idx-card">
+      <div class="name">ドル円</div>
+      <div class="val fl">~148円</div>
+      <div class="chg fl">Warsh就任で小幅変動</div>
+      <div class="note">PCE発表(5/28)待ち</div>
+    </div>
+  </div>
+
+  <div style="font-size:10px;color:var(--muted);margin-bottom:8px;">【米国】</div>
+  <div class="grid-4">
+    <div class="idx-card">
+      <div class="name">S&amp;P 500</div>
+      <div class="val up">~7,500</div>
+      <div class="chg up">▲ 先物上昇（再開初日）</div>
+      <div class="note">CAPE比40に接近｜割高懸念あり</div>
+    </div>
+    <div class="idx-card">
+      <div class="name">Nasdaq Composite</div>
+      <div class="val up">~22,700</div>
+      <div class="chg up">▲ 先物上昇</div>
+      <div class="note">AI・半導体テーマが牽引</div>
+    </div>
+    <div class="idx-card">
+      <div class="name">Dow Jones</div>
+      <div class="val up">~50,600</div>
+      <div class="chg up">▲ 先物上昇</div>
+      <div class="note">イラン停戦延長でセンチメント改善</div>
+    </div>
+    <div class="idx-card">
+      <div class="name">VIX 恐怖指数</div>
+      <div class="val fl">中程度</div>
+      <div class="chg fl">地政学緩和で低下傾向</div>
+      <div class="note">ただしヘッドラインリスク残存</div>
+    </div>
+  </div>
+
+  <div style="font-size:10px;color:var(--muted);margin-bottom:8px;">【貴金属・エネルギー】</div>
+  <div class="grid-4">
+    <div class="idx-card">
+      <div class="name">金 (Gold)</div>
+      <div class="val up">$4,579/oz</div>
+      <div class="chg up">▲ +1.39% (5/25)</div>
+      <div class="note">最高値圏｜YoY +36.84%｜$4,600タッチ</div>
+    </div>
+    <div class="idx-card">
+      <div class="name">銀 (Silver)</div>
+      <div class="val dn">$75.68/oz</div>
+      <div class="chg dn">▼ −3.07% (5/26)</div>
+      <div class="note">$77割れ調整｜YoY +127%</div>
+    </div>
+    <div class="idx-card">
+      <div class="name">プラチナ</div>
+      <div class="val up">$1,953.70/oz</div>
+      <div class="chg up">▲ 上昇基調</div>
+      <div class="note">2026年世界需給赤字297k oz予測</div>
+    </div>
+    <div class="idx-card">
+      <div class="name">WTI 原油</div>
+      <div class="val dn">~$97〜102</div>
+      <div class="chg dn">▼ イラン停戦延長で下落圧力</div>
+      <div class="note">Hormuz再開観測で需給正常化期待</div>
+    </div>
+  </div>
+
+  <div style="font-size:10px;color:var(--muted);margin-bottom:8px;">【暗号資産】</div>
+  <div class="grid-4">
+    <div class="idx-card">
+      <div class="name">BTC</div>
+      <div class="val up">$76,754</div>
+      <div class="chg up">▲ +0.4% (9:30 ET)</div>
+      <div class="note">米・イスラエル空爆に耐性｜底堅い</div>
+    </div>
+    <div class="idx-card">
+      <div class="name">ETH</div>
+      <div class="val up">$2,114</div>
+      <div class="chg up">▲ +0.6% (9:16 ET)</div>
+      <div class="note">時価総額~$233B｜レンジ推移継続</div>
+    </div>
+    <div class="idx-card">
+      <div class="name">暗号資産 総時価総額</div>
+      <div class="val up">$2.57T</div>
+      <div class="chg up">▲ +2.39%</div>
+      <div class="note">BTC dominance 60%</div>
+    </div>
+    <div class="idx-card">
+      <div class="name">米国CPI / FOMC</div>
+      <div class="val dn">3.8%</div>
+      <div class="chg dn">年内利下げ確率 &lt;3%</div>
+      <div class="note">Warsh就任、利上げシナリオも</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ===== 24時間イベント ===== -->
+<div class="section">
+  <div class="section-head"><span class="section-icon">⚡</span><h2>直近24時間の主要イベント &amp; 市場への影響</h2></div>
+
+  <div class="ev crit">
+    <div class="ev-head">
+      <span class="ev-tag tag-geo">地政学</span>
+      <span class="ev-title">米・イラン停戦60日延長 — Hormuz海峡の再開合意</span>
+      <span class="badge badge-hot">最重要 ★★★</span>
+    </div>
+    <div class="ev-body">
+      トランプ大統領が停戦の<strong>60日延長とHormuz海峡の再開</strong>を発表。欧州株（独DAX +2%）を筆頭に株式市場は楽観論が先行。
+      ただしPolymarketの停戦継続確率は依然50%台で、専門家は「ポジションアンワインドによる一時的なラリー」と警告。
+      原油（WTI）は$97〜102レンジで下落圧力が継続。Hormuz正常化まで6〜8週のラグが見込まれる。
+    </div>
+    <div class="fact-box">【事実】5/26、米国がイランとの停戦60日延長・Hormuz再開を発表。欧州株が上昇、原油に下落圧力。</div>
+    <div class="est-box">【推測】エネルギーインフラ復旧には6〜8週の時間が必要。原油の本格下落は段階的。合意失敗なら即座に原油急騰リスク。</div>
+    <div class="ev-impact">
+      <span class="lbl">株式影響：</span>
+      <span>航空・化学・消費財 → 強気。エネルギー株 → 弱気。全体センチメント → 上昇バイアス。ただし「ヘッドライン後の継続力」は要確認。</span>
+    </div>
+  </div>
+
+  <div class="ev crit">
+    <div class="ev-head">
+      <span class="ev-tag tag-mon">金融政策</span>
+      <span class="ev-title">Kevin Warsh 新FRB議長 — 本日就任・初発言に注目</span>
+      <span class="badge badge-risk">金利リスク</span>
+    </div>
+    <div class="ev-body">
+      Kevin Warshが本日FRB議長に正式就任。Senate 54-45（史上最僅差）で承認。
+      トランプ指名だが、<strong>インフレ3.8%・原油$100超・シェルター価格急騰</strong>で「利下げどころか利上げ再考」局面。
+      就任式での発言が金利・ドル・株式に即影響する可能性あり。年内利下げ確率は3%未満。
+    </div>
+    <div class="fact-box">【事実】Warsh確認：インフレ最優先・発言最小化・FRB権限縮小を公言。利下げより引き締め姿勢。</div>
+    <div class="risk-box">【リスク】初発言でインフレ懸念を強調した場合、グロース株・REITへの急落リスク。長期金利上昇に注意。</div>
+    <div class="ev-impact">
+      <span class="lbl">株式影響：</span>
+      <span>グロース・ハイテク → 逆風。金融・銀行 → 相対有利。REITは金利高止まりで慎重。</span>
+    </div>
+  </div>
+
+  <div class="ev pos">
+    <div class="ev-head">
+      <span class="ev-tag tag-ai">AI・テック</span>
+      <span class="ev-title">SoftBank (9984) — 5日間+40%、時価総額¥40兆超の史上最高値更新</span>
+      <span class="badge badge-hot">AI相場フル稼働</span>
+    </div>
+    <div class="ev-body">
+      <strong>OpenAI IPO申請（Goldman Sachs・Morgan Stanley主幹）</strong>が早ければ5/29に機密ファイリング予定との報道。
+      SoftBankのOpenAI投資総額は$64.6B（持分約13%）に達する。SB Energy（再エネ子会社）のIPOも並行。
+      5日間の上昇率+40%で市場最高値を更新。5/26は開始直後から続伸し、一時下げ幅を縮小。
+    </div>
+    <div class="fact-box">【事実】SoftBank CFOが$32.4B投資（FY2026）＋$30B追加コミットを確認。OpenAI IPO申請準備中（公式未確認）。</div>
+    <div class="est-box">【推測】OpenAI秋のIPO想定。成功すれば時価総額$200B超の可能性。SoftBankのNAV（純資産価値）が大幅改善。</div>
+    <div class="ev-impact">
+      <span class="lbl">日本株影響：</span>
+      <span>関連AI・半導体株への波及（Fujikura・Ibiden・Kioxia）継続。ただし5日で+40%の過熱感から短期的な調整リスクあり。</span>
+    </div>
+  </div>
+
+  <div class="ev warn">
+    <div class="ev-head">
+      <span class="ev-tag tag-ai">企業決算</span>
+      <span class="ev-title">今週の決算ラッシュ — Marvell・Salesforce・Snowflake・Dell・Costco</span>
+    </div>
+    <div class="ev-body">
+      5/27 Marvell (MRVL)・Salesforce (CRM)・Snowflake (SNOW)、5/28 Dell (DELL)・Costco (COST)が決算発表。
+      MRVLは「AIカスタムチップ (XPU) が2026年で倍増、FY2027ガイダンス$11B（+30%）」でコンセンサスは超強気。
+      SalesforceはAgentforce AIプラットフォームの収益化が焦点。
+      Costcoは消費者動向・会員更新率に注目。
+    </div>
+    <div class="est-box">【推測】MRVLがコンセンサス通過なら半導体セクター全体に追い風。CRMがAgentforce収益を示せばSaaS株に恩恵。</div>
+    <div class="risk-box">【リスク】Snowflakeはクラウド支出鈍化懸念。Dellはエンタープライズ支出が弱ければAIサーバー需要への疑問符。</div>
+  </div>
+
+  <div class="ev info">
+    <div class="ev-head">
+      <span class="ev-tag tag-pm">貴金属</span>
+      <span class="ev-title">金 $4,579 — 最高値圏維持｜銀が$75.68に急落（−3.07%）</span>
+    </div>
+    <div class="ev-body">
+      金は米・イラン停戦楽観論から一時下落も「インフレ高止まり・中銀買い需要」で$4,500台をキープ。
+      銀は$77サポート割れで急落。プラチナは$1,953で堅調。
+      JPMorgan・Goldman Sachsは年末$5,400〜$6,300の強気予測を維持。
+    </div>
+    <div class="fact-box">【事実】金YoY +36.84%。中銀需要が構造的な下支え。JPM: 年内$5,055予測。</div>
+    <div class="ev-impact">
+      <span class="lbl">投資影響：</span>
+      <span>金 → 中長期の避難先として有効。銀の急落は短期的押し目形成の可能性。地政学リスク再燃なら金が$5,000乗せ試す。</span>
+    </div>
+  </div>
+
+  <div class="ev info">
+    <div class="ev-head">
+      <span class="ev-tag tag-crypto">暗号資産</span>
+      <span class="ev-title">BTC/ETH — 米・イスラエル空爆に耐性、価格底堅く推移</span>
+    </div>
+    <div class="ev-body">
+      5/26、米・イスラエルの対イラン空爆報道にもBTC $76,754・ETH $2,114と<strong>ほぼ無反応</strong>。
+      先週の地政学ヘッドラインへの感応度から「耐性獲得」の可能性。機関投資家ETFフロー（BlackRock主導）が安定的な下支え。
+      CLARITY Act上院委員会通過（15-9）で規制明確化への期待が継続。
+    </div>
+    <div class="fact-box">【事実】BTC時価総額$1.33T・ETH $233B。CLARITY Act Senate Banking Committee通過確認。</div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ===== 日本株 10選 ===== -->
+<div class="section">
+  <div class="section-head"><span class="section-icon">🇯🇵</span><h2>日本株 特筆銘柄 10選 — 2026年5月26日時点</h2></div>
+
+  <!-- 攻め -->
+  <div style="font-size:11px;font-weight:700;color:var(--red);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;">⚔ 攻め — 高成長テーマ株</div>
+  <div class="grid-3" style="margin-bottom:16px;">
+
+    <div class="stock-card atk">
+      <div class="sc-top">
+        <div><div class="sc-ticker">SoftBank Group</div><div class="sc-code">9984.T</div></div>
+        <span class="sc-mkt mkt-prime">東証プライム</span>
+      </div>
+      <div class="sc-name">ソフトバンクグループ ― AI投資コングロマリット</div>
+      <div class="sc-price up">史上最高値更新</div>
+      <div class="sc-change up">▲ 5日間 +40%超｜時価総額 ¥40兆超</div>
+      <div class="sc-row">
+        <div class="sc-kv"><span class="k">OpenAI投資</span><span class="v">$64.6B / 持分13%</span></div>
+        <div class="sc-kv"><span class="k">純利益</span><span class="v">¥5兆（FY2026）</span></div>
+        <div class="sc-kv"><span class="k">IPO申請</span><span class="v">早ければ5/29</span></div>
+      </div>
+      <div class="sc-section">事実（確認済み）</div>
+      <div class="sc-body">CFO Goto氏が$32.4B投資＋$30B追加コミットを公式確認。FY2026純利益¥5兆（前年比4.3倍）。ARM株・OpenAI株の上昇でNAVが大幅改善。</div>
+      <div class="sc-section">推測・テーマ性</div>
+      <div class="sc-body">OpenAI秋IPO想定で保有価値が再評価。Arm Holdingsのバリュエーション再レートも継続。SB Energyの再エネIPOが追加カタリスト。</div>
+      <div class="sc-section">リスク</div>
+      <div class="sc-body">5日間+40%の急騰で過熱感。IPO延期・OpenAI収益化遅延・金利上昇（負債コスト増）は要注意。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：IPO申請準備</span>
+        <span class="sc-tag est">推測：秋IPO成功</span>
+        <span class="sc-tag risk">過熱・金利リスク</span>
+      </div>
+    </div>
+
+    <div class="stock-card atk">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Fujikura</div><div class="sc-code">5803.T</div></div>
+        <span class="sc-mkt mkt-prime">東証プライム</span>
+      </div>
+      <div class="sc-name">古河電気工業グループ ― AIデータセンター向け光コネクタ</div>
+      <div class="sc-price up">高値圏推移</div>
+      <div class="sc-change up">▲ +14.4% (5/25) ｜YTD +400%超水準</div>
+      <div class="sc-row">
+        <div class="sc-kv"><span class="k">次回決算</span><span class="v">2026年8月6日</span></div>
+        <div class="sc-kv"><span class="k">前四半期EPS</span><span class="v">27.32円（予想比−10%）</span></div>
+      </div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">AI・データセンター向け光ファイバーコネクタ（800G/1.6T対応）の主要サプライヤー。昨年末から株価4倍超の急騰。SoftBankラリーに連動して5/25に14.4%高。</div>
+      <div class="sc-section">テーマ性</div>
+      <div class="sc-body">AIデータセンターの電力・光配線需要は長期的に増大。Marvell・Nvidiaが光インターコネクトを50%超成長と公表しており、その恩恵を直接受ける川下サプライヤー。</div>
+      <div class="sc-section">リスク</div>
+      <div class="sc-body">前四半期EPS予想比−10%のミス。株価急騰後の業績未達リスク。次回決算（8/6）が重要な通過点。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：AI光配線主要サプライヤー</span>
+        <span class="sc-tag risk">業績ミスリスク</span>
+      </div>
+    </div>
+
+    <div class="stock-card atk">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Kioxia Holdings</div><div class="sc-code">285A.T</div></div>
+        <span class="sc-mkt mkt-prime">東証プライム</span>
+      </div>
+      <div class="sc-name">キオクシア ― AI向けNANDメモリ最大手</div>
+      <div class="sc-price up">急騰局面</div>
+      <div class="sc-change up">▲ +14% (5/25) ｜2025年通期+540%</div>
+      <div class="sc-row">
+        <div class="sc-kv"><span class="k">市場シェア</span><span class="v">NAND 世界2位</span></div>
+        <div class="sc-kv"><span class="k">製品</span><span class="v">HBM対応・AI推論向け</span></div>
+      </div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">AI推論・エッジコンピューティング・AI-native PCの拡大でNAND需要が急増。2025年に540%の上昇を記録し、2026年もAI需要継続で高値圏を推移。5/25に+14%の急騰。</div>
+      <div class="sc-section">テーマ性</div>
+      <div class="sc-body">AIモデルの巨大化（GPT-5・Gemini 2・Llama 4等）に伴いメモリ帯域幅・密度の需要が指数関数的に増大。日本政府が半導体支援予算¥1.23兆を計上。</div>
+      <div class="sc-section">リスク</div>
+      <div class="sc-body">NANDの市況サイクルリスク。競合（Samsung・Micron）の価格競争。株価の急騰後は調整局面に注意。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：AI需要構造的増大</span>
+        <span class="sc-tag est">推測：需要継続</span>
+        <span class="sc-tag risk">NANDサイクルリスク</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:16px;">
+    <div class="stock-card atk">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Ibiden</div><div class="sc-code">4062.T</div></div>
+        <span class="sc-mkt mkt-prime">東証プライム</span>
+      </div>
+      <div class="sc-name">イビデン ― AI半導体パッケージ基板</div>
+      <div class="sc-price up">急騰継続</div>
+      <div class="sc-change up">▲ +8.7% (5/25) ｜5/21比 +14.3%</div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">Intel・Nvidia向け高性能ABFパッケージ基板（プリント回路基板）の世界最大手級サプライヤー。AI GPU向け需要が爆発的に増大。</div>
+      <div class="sc-section">テーマ性・推測</div>
+      <div class="sc-body">HBM（高帯域幅メモリ）向けパッケージ基板の需要拡大。AI加速器の高発熱対策として基板の高機能化が必須で、技術的優位性が高い。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：AI GPU向け主要サプライヤー</span>
+        <span class="sc-tag est">推測：需要継続拡大</span>
+      </div>
+    </div>
+
+    <div class="stock-card atk">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Lasertec</div><div class="sc-code">6920.T</div></div>
+        <span class="sc-mkt mkt-prime">東証プライム</span>
+      </div>
+      <div class="sc-name">レーザーテック ― EUV検査装置の独占的供給</div>
+      <div class="sc-price up">急騰中</div>
+      <div class="sc-change up">▲ +12.8% (5/25)</div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">EUV（極端紫外線）露光用フォトマスク検査装置で世界的に独占的地位を持つ。ASMLのEUV導入拡大に直接連動。AI向け先端半導体（2nm・3nm）量産で需要急増。</div>
+      <div class="sc-section">テーマ性</div>
+      <div class="sc-body">TSMC・Intel・Samsung・Rapidusの先端プロセス投資が続く限り需要は構造的に拡大。日本政府¥1.23兆の半導体支援が後押し。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：EUV検査装置 世界独占的地位</span>
+        <span class="sc-tag risk">サイクル・バリュエーションリスク</span>
+      </div>
+    </div>
+
+    <div class="stock-card mid">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Advantest</div><div class="sc-code">6857.T</div></div>
+        <span class="sc-mkt mkt-prime">東証プライム</span>
+      </div>
+      <div class="sc-name">アドバンテスト ― 半導体テスト装置</div>
+      <div class="sc-price up">+3.4% (5/25)</div>
+      <div class="sc-change up">▲ 記録的四半期 | FY2026通期 売上+21.8%・利益+70.6%見込</div>
+      <div class="sc-section">事実（業績）</div>
+      <div class="sc-body">Q1記録的業績。AI半導体（GPU・HBM）のテスト装置で世界首位級。Nvidiaサプライチェーンの重要環。売上予想+21.8%・利益+70.6%は業績の確度が高い。</div>
+      <div class="sc-section">テーマ性</div>
+      <div class="sc-body">AIモデルの大型化→高性能GPUの増産→テスト工程の需要急増という連鎖が続く。HBM対応テスタは価格も高く収益性向上。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：Q1記録的決算・ガイダンス上方</span>
+        <span class="sc-tag est">推測：需要継続</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 中間・守り -->
+  <div style="font-size:11px;font-weight:700;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;">🛡 中間〜守り — 業績安定・政策テーマ</div>
+  <div class="grid-3">
+
+    <div class="stock-card mid">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Yaskawa Electric</div><div class="sc-code">6506.T</div></div>
+        <span class="sc-mkt mkt-prime">東証プライム</span>
+      </div>
+      <div class="sc-name">安川電機 ― フィジカルAI・産業ロボット</div>
+      <div class="sc-price fl">中高値圏</div>
+      <div class="sc-change up">▲ フィジカルAIテーマ再加熱</div>
+      <div class="sc-row">
+        <div class="sc-kv"><span class="k">新中計目標</span><span class="v">営業利益¥1,000億（現在の2倍）</span></div>
+        <div class="sc-kv"><span class="k">投資計画</span><span class="v">4年間で¥2,500億</span></div>
+      </div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">2030年に向けた中計を発表。AI搭載ロボット「MOTOMAN NEXT」にNvidiaのAI半導体GPUを搭載。政府が「AIロボティクス戦略」を公表し追い風。</div>
+      <div class="sc-section">テーマ性</div>
+      <div class="sc-body">フィジカルAI（AIが自律的に実世界の機械を動かす）の本命株。工場自動化・物流ロボット・介護ロボット等の実需拡大。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：中計・Nvidia提携</span>
+        <span class="sc-tag est">推測：フィジカルAI収益化</span>
+        <span class="sc-tag risk">中計達成リスク</span>
+      </div>
+    </div>
+
+    <div class="stock-card def">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Mitsubishi Heavy</div><div class="sc-code">7011.T</div></div>
+        <span class="sc-mkt mkt-prime">東証プライム</span>
+      </div>
+      <div class="sc-name">三菱重工業 ― 防衛・航空・エネルギー</div>
+      <div class="sc-price up">過去最高益水準</div>
+      <div class="sc-change up">▲ 防衛費増額で継続的上昇</div>
+      <div class="sc-row">
+        <div class="sc-kv"><span class="k">防衛予算</span><span class="v">GDP比2%へ（2027年目標）</span></div>
+        <div class="sc-kv"><span class="k">FY2026</span><span class="v">過去最高益見込</span></div>
+      </div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">日本の防衛費増額（GDP比2%目標）の最大受益企業。防衛装備の輸出解禁も追い風。航空機エンジン・宇宙・エネルギー事業も堅調。FY2026過去最高益見込み。</div>
+      <div class="sc-section">テーマ性</div>
+      <div class="sc-body">高市政権が掲げる防衛・経済安全保障の重点17分野に合致。地政学リスク高止まり環境で防衛需要は長期化。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：防衛費増額・過去最高益</span>
+        <span class="sc-tag est">推測：防衛輸出拡大</span>
+      </div>
+    </div>
+
+    <div class="stock-card def">
+      <div class="sc-top">
+        <div><div class="sc-ticker">IHI</div><div class="sc-code">7013.T</div></div>
+        <span class="sc-mkt mkt-prime">東証プライム</span>
+      </div>
+      <div class="sc-name">IHI ― 航空エンジン・防衛・宇宙</div>
+      <div class="sc-price up">最高値更新継続</div>
+      <div class="sc-change up">▲ 航空エンジン好調・防衛予算追い風</div>
+      <div class="sc-row">
+        <div class="sc-kv"><span class="k">FY2026</span><span class="v">連結純利益 過去最高見込</span></div>
+        <div class="sc-kv"><span class="k">主力</span><span class="v">民間航空エンジン・防衛・水素</span></div>
+      </div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">航空エンジン部品が旅行需要回復で急拡大。FY2026連結純利益が過去最高更新見込み。防衛分野も防衛費増額で受注拡大。水素・GX分野も政府支援あり。</div>
+      <div class="sc-section">テーマ性</div>
+      <div class="sc-body">三菱重工・川崎重工と並ぶ「防衛御三家」。航空エンジン・宇宙・水素の3軸で長期成長ストーリーが明確。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：過去最高益・防衛受注増</span>
+        <span class="sc-tag est">推測：水素事業収益化</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ===== 米国株 10選 ===== -->
+<div class="section">
+  <div class="section-head"><span class="section-icon">🇺🇸</span><h2>米国株 特筆銘柄 10選 — 2026年5月26日時点</h2></div>
+
+  <!-- 攻め -->
+  <div style="font-size:11px;font-weight:700;color:var(--red);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;">⚔ 攻め — 高成長・高リスク</div>
+  <div class="grid-3" style="margin-bottom:16px;">
+
+    <div class="stock-card atk">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Marvell Technology</div><div class="sc-code">MRVL</div></div>
+        <span class="sc-mkt mkt-nasdaq">NASDAQ</span>
+      </div>
+      <div class="sc-name">マーベル・テクノロジー ― AI カスタムXPUチップ</div>
+      <div class="sc-price up">YTD +100%超</div>
+      <div class="sc-change up">▲ 5/27 Q1 FY2027 決算発表 ← 今週最大の催促</div>
+      <div class="sc-row">
+        <div class="sc-kv"><span class="k">Q1コンセンサス</span><span class="v">売上$2.40B / EPS $0.80</span></div>
+        <div class="sc-kv"><span class="k">FY2027ガイダンス</span><span class="v">$11B (+30%)</span></div>
+        <div class="sc-kv"><span class="k">XPU受注</span><span class="v">20+ソケット確保</span></div>
+      </div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">Amazon・Google向けカスタムAI XPUを設計・製造。光インターコネクト（800G/1.6T）が年率50%超成長。Nvidiaが$2Bの戦略投資・提携を発表。カスタム収益はFY2026に倍増の$1.5B達成。</div>
+      <div class="sc-section">推測・テーマ性</div>
+      <div class="sc-body">FY2027のデータセンター収益+40%ガイダンスは構造的AI投資サイクルを反映。2026年中にコンセンサスを上回り続けた場合、株価は大幅な上値余地。「次のNvidia候補」との評価も。</div>
+      <div class="sc-section">リスク</div>
+      <div class="sc-body">YTD+100%で期待値が極めて高い。ガイダンス据え置きでも「ガッカリ売り」が出る可能性。ハイパースケーラーのカスタムチップ内製化（Google TPU・Amazon Trainium）は競合リスク。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：Nvidia提携・XPU受注確認</span>
+        <span class="sc-tag est">推測：FY2027 $11B達成</span>
+        <span class="sc-tag risk">高バリュエーション・決算前後ブレ</span>
+      </div>
+    </div>
+
+    <div class="stock-card atk">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Nvidia</div><div class="sc-code">NVDA</div></div>
+        <span class="sc-mkt mkt-nasdaq">NASDAQ</span>
+      </div>
+      <div class="sc-name">エヌビディア ― AI半導体の絶対覇者</div>
+      <div class="sc-price fl">決算後調整中</div>
+      <div class="sc-change dn">▼ 決算後「噂で買い・事実で売り」の典型例</div>
+      <div class="sc-row">
+        <div class="sc-kv"><span class="k">Q1 FY2027</span><span class="v">売上$81.6B (+85% YoY)</span></div>
+        <div class="sc-kv"><span class="k">Q2ガイダンス</span><span class="v">$91B</span></div>
+        <div class="sc-kv"><span class="k">DCセグメント</span><span class="v">$39.1B (+69% YoY)</span></div>
+      </div>
+      <div class="sc-section">事実（確認済み）</div>
+      <div class="sc-body">5/20に決算発表。売上$81.6B・EPS$1.87（共にコンセンサス超過）。データセンターが売上の約90%。Q2ガイダンス$91Bは季節調整なしの力強い成長。</div>
+      <div class="sc-section">推測</div>
+      <div class="sc-body">GPT-5・Gemini 2・Llama 4の学習に膨大なGPUクラスターが必要で需要の構造的な増大が継続。Blackwellアーキテクチャへの移行で ASPが更に上昇する見通し。</div>
+      <div class="sc-section">リスク</div>
+      <div class="sc-body">30x forward PERで期待極めて高い。中国向け輸出規制強化リスク。決算後の調整は短期的な押し目。競合（AMD・Intel・カスタムXPU）の台頭。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：$81.6B記録的売上・$91Bガイダンス</span>
+        <span class="sc-tag risk">高バリュエーション・輸出規制</span>
+      </div>
+    </div>
+
+    <div class="stock-card atk">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Palantir Technologies</div><div class="sc-code">PLTR</div></div>
+        <span class="sc-mkt mkt-nasdaq">NASDAQ</span>
+      </div>
+      <div class="sc-name">パランティア ― 政府・防衛向けAIデータ分析</div>
+      <div class="sc-price fl">YTD 調整局面</div>
+      <div class="sc-change up">▲ +2.46% 本日</div>
+      <div class="sc-row">
+        <div class="sc-kv"><span class="k">Q1 2026</span><span class="v">売上$1.6B (+85% YoY)</span></div>
+        <div class="sc-kv"><span class="k">Rule of 40</span><span class="v">スコア 145%（業界最高水準）</span></div>
+      </div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">Q1 2026売上+85% YoYで過去最高。米国政府・防衛省のAIデータ分析基盤として深く組み込まれ。AIPプラットフォームの商業部門展開が加速。</div>
+      <div class="sc-section">推測・テーマ性</div>
+      <div class="sc-body">中東紛争長期化・地政学リスク高止まりで防衛向けAI需要が構造的に拡大。政府ガバメントクラウド移行の恩恵。AIプラットフォームの「勝者総取り」構造。</div>
+      <div class="sc-section">リスク</div>
+      <div class="sc-body">YTD下落でバリュエーション依然割高（forward PER 100超）。大型顧客への依存・政府契約更新リスク。トランプ政権の政府支出削減が影響する可能性。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：Q1 +85% YoY</span>
+        <span class="sc-tag est">推測：商業AI加速</span>
+        <span class="sc-tag risk">高PER・政府契約リスク</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 中間 -->
+  <div style="font-size:11px;font-weight:700;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;">⚖ 中間 — バランス型成長株</div>
+  <div class="grid-3" style="margin-bottom:16px;">
+
+    <div class="stock-card mid">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Salesforce</div><div class="sc-code">CRM</div></div>
+        <span class="sc-mkt mkt-nyse">NYSE</span>
+      </div>
+      <div class="sc-name">セールスフォース ― 世界最大CRM・Agentforce AI</div>
+      <div class="sc-price fl">決算待ち (5/27)</div>
+      <div class="sc-change fl">▲ 先物でやや強気</div>
+      <div class="sc-row">
+        <div class="sc-kv"><span class="k">売上規模</span><span class="v">年間$~38B</span></div>
+        <div class="sc-kv"><span class="k">フォーカス</span><span class="v">Agentforce AI収益化</span></div>
+      </div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">Agentforce（AIエージェントプラットフォーム）を主力製品として展開中。世界最大のCRMプラットフォームに15万社以上が依存。明日5/27に決算発表。</div>
+      <div class="sc-section">推測・テーマ性</div>
+      <div class="sc-body">エンタープライズAIエージェントの「キラーアプリ」候補。CRM×AIの収益化が成功すれば既存顧客基盤への深い展開が可能。SaaS株全体の方向性を決める決算として注目。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：世界最大CRM・Agentforce展開</span>
+        <span class="sc-tag est">推測：AI収益化加速</span>
+        <span class="sc-tag risk">AI ROI実証が遅れるリスク</span>
+      </div>
+    </div>
+
+    <div class="stock-card mid">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Microsoft</div><div class="sc-code">MSFT</div></div>
+        <span class="sc-mkt mkt-nasdaq">NASDAQ</span>
+      </div>
+      <div class="sc-name">マイクロソフト ― AIクラウド最大手・Copilot</div>
+      <div class="sc-price fl">$418.57 (5/22)</div>
+      <div class="sc-change fl">▼ −0.12% 先週末</div>
+      <div class="sc-row">
+        <div class="sc-kv"><span class="k">AIビジネス</span><span class="v">年率$37B (+123% YoY)</span></div>
+        <div class="sc-kv"><span class="k">Azure</span><span class="v">クラウド成長継続</span></div>
+      </div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">AI年間収益ランレートが$37B（前年比+123%）を達成。Microsoft Cloud全体が$54B超（+29%）。OpenAI独占提携によるCopilotの企業展開が加速。Azure OpenAIサービスの顧客数が急増。</div>
+      <div class="sc-section">推測・テーマ性</div>
+      <div class="sc-body">エンタープライズAI導入で「Windows for AI era」のポジションを確立しつつある。GitHub Copilot・Microsoft 365 Copilotの従量課金モデルが中長期の高収益化を示唆。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：AI年率$37B達成</span>
+        <span class="sc-tag est">推測：Azure AI成長継続</span>
+      </div>
+    </div>
+
+    <div class="stock-card mid">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Dell Technologies</div><div class="sc-code">DELL</div></div>
+        <span class="sc-mkt mkt-nyse">NYSE</span>
+      </div>
+      <div class="sc-name">デル・テクノロジーズ ― AIサーバー・インフラ</div>
+      <div class="sc-price fl">決算待ち (5/28)</div>
+      <div class="sc-change fl">AI受注残高に注目</div>
+      <div class="sc-row">
+        <div class="sc-kv"><span class="k">焦点</span><span class="v">AIサーバー受注残高</span></div>
+        <div class="sc-kv"><span class="k">決算</span><span class="v">5月28日（木）</span></div>
+      </div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">Nvidia GPU搭載AIサーバーの主要OEMベンダー。企業向けのデータセンター機器更新サイクルが進行中。PowerEdge AI ServerのバックオーダーはFY2026で急増。</div>
+      <div class="sc-section">推測</div>
+      <div class="sc-body">企業のAI投資が「クラウドファースト」から「オンプレミスAI」に一部シフトする恩恵を受ける可能性。AIサーバー受注残高の開示がカタリスト。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：AIサーバー主要OEM</span>
+        <span class="sc-tag est">推測：受注残高拡大</span>
+        <span class="sc-tag risk">企業IT支出鈍化リスク</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 守り -->
+  <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;">🏰 守り — 安定収益・ディフェンシブ</div>
+  <div class="grid-3">
+
+    <div class="stock-card def">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Costco Wholesale</div><div class="sc-code">COST</div></div>
+        <span class="sc-mkt mkt-nasdaq">NASDAQ</span>
+      </div>
+      <div class="sc-name">コストコ ― 会員制倉庫型小売 最強ビジネスモデル</div>
+      <div class="sc-price up">高値圏推移</div>
+      <div class="sc-change up">▲ 安定成長・決算 5/28</div>
+      <div class="sc-row">
+        <div class="sc-kv"><span class="k">Q3 FY2026予想</span><span class="v">売上$69.3B (+9% YoY)</span></div>
+        <div class="sc-kv"><span class="k">EPS予想</span><span class="v">$4.56 (+13% YoY)</span></div>
+        <div class="sc-kv"><span class="k">会員更新率</span><span class="v">90%超（構造的強み）</span></div>
+      </div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">会員更新率90%超が生み出す安定収益構造。インフレ環境で「バリュー消費」への需要が高まりCostcoが受益。同店売上成長・Eコマース・国際展開が継続。</div>
+      <div class="sc-section">推測・テーマ性</div>
+      <div class="sc-body">消費者がプレミアム消費を抑制しながらもCostcoのバルク購入にシフトする「ダウントレード」が追い風。インフレと停戦原油下落の両方で収益向上。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：会員更新率90%超・安定成長</span>
+        <span class="sc-tag est">推測：インフレ環境の恩恵継続</span>
+      </div>
+    </div>
+
+    <div class="stock-card def">
+      <div class="sc-top">
+        <div><div class="sc-ticker">AutoZone</div><div class="sc-code">AZO</div></div>
+        <span class="sc-mkt mkt-nyse">NYSE</span>
+      </div>
+      <div class="sc-name">オートゾーン ― 自動車部品小売 本日決算</div>
+      <div class="sc-price fl">決算日（本日 5/26）</div>
+      <div class="sc-change fl">景気耐性の高いビジネスモデル</div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">本日（5/26）決算発表。景気後退・インフレ環境でも「車の修理を自分で行うDIY需要」が安定。新車購入コスト上昇で既存車両の長寿命化ニーズも高まり、耐久需要の受益銘柄。</div>
+      <div class="sc-section">推測</div>
+      <div class="sc-body">金利高止まりで自動車ローンの返済コストが高く、新車購入を抑制した消費者が旧車の維持・修理を選ぶ傾向が強まっている。景気後退ヘッジとして機能。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：景気耐性の高いDIY需要</span>
+        <span class="sc-tag est">推測：金利高→旧車維持需要増</span>
+      </div>
+    </div>
+
+    <div class="stock-card def">
+      <div class="sc-top">
+        <div><div class="sc-ticker">Tesla</div><div class="sc-code">TSLA</div></div>
+        <span class="sc-mkt mkt-nasdaq">NASDAQ</span>
+      </div>
+      <div class="sc-name">テスラ ― EV・ロボタクシー・ヒューマノイドロボット</div>
+      <div class="sc-price fl">YTD 調整 → 反発局面</div>
+      <div class="sc-change up">▲ +3.14% 本日</div>
+      <div class="sc-row">
+        <div class="sc-kv"><span class="k">Q1 2026</span><span class="v">売上$22.4B (+16% YoY)</span></div>
+        <div class="sc-kv"><span class="k">長期ビジョン</span><span class="v">ロボタクシー・Optimus</span></div>
+      </div>
+      <div class="sc-section">事実</div>
+      <div class="sc-body">Q1売上+16%。EV事業は競合激化で収益性が圧迫されているが、FSD（完全自動運転）・Optimus（ヒューマノイドロボット）のビジョンが株価を支持。</div>
+      <div class="sc-section">推測・テーマ性</div>
+      <div class="sc-body">ロボタクシーの商業化スケジュールがカタリスト。フィジカルAI・自律ロボットのテーマに乗った評価が本来のEV事業バリュエーションを大きく超過。</div>
+      <div class="sc-section">リスク</div>
+      <div class="sc-body">YTD下落でセンチメント不安定。マスク氏の行動リスク（政治活動・DOGE）。EV価格競争による利益率低下。ロボタクシー商業化の遅延。</div>
+      <div class="sc-tags">
+        <span class="sc-tag fact">事実：Q1 +16% YoY</span>
+        <span class="sc-tag est">推測：ロボタクシー・Optimus</span>
+        <span class="sc-tag risk">マスク・EV競争・遅延</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ===== 分類 ===== -->
+<div class="section">
+  <div class="section-head"><span class="section-icon">🗂</span><h2>銘柄分類 — 攻め / 中間 / 守り</h2></div>
+  <div style="font-size:11px;color:var(--muted);margin-bottom:14px;">※投資スタイル・リスク許容度に応じて参照してください。これは推奨ではなく分析上の分類です。</div>
+
+  <div class="cls-grid">
+    <div class="cls-col cls-atk">
+      <h3>⚔ 攻め（高成長・高リスク）</h3>
+      <div class="cls-item"><span class="ticker">SBG (9984)</span><span class="desc">OpenAI IPO観測。5日+40%の超過熱。短期トレード向け。</span></div>
+      <div class="cls-item"><span class="ticker">Fujikura (5803)</span><span class="desc">AI光配線。YTD+400%超。業績追いつくか要注意。</span></div>
+      <div class="cls-item"><span class="ticker">Kioxia (285A)</span><span class="desc">NAND×AI需要。2025年+540%の急騰銘柄。</span></div>
+      <div class="cls-item"><span class="ticker">Lasertec (6920)</span><span class="desc">EUV独占。半導体サイクル感応度が高い。</span></div>
+      <div class="cls-item"><span class="ticker">MRVL (NASDAQ)</span><span class="desc">YTD+100%。決算5/27。コンセンサス超えがトリガー。</span></div>
+      <div class="cls-item"><span class="ticker">NVDA (NASDAQ)</span><span class="desc">AI半導体覇者。決算後調整中が短期的な押し目か。</span></div>
+      <div class="cls-item"><span class="ticker">PLTR (NASDAQ)</span><span class="desc">防衛AI。高成長・超高PER。信念が必要な銘柄。</span></div>
+    </div>
+    <div class="cls-col cls-mid">
+      <h3>⚖ 中間（成長＋安定のバランス）</h3>
+      <div class="cls-item"><span class="ticker">Advantest (6857)</span><span class="desc">業績確度高い。FY2026利益+70.6%見込。</span></div>
+      <div class="cls-item"><span class="ticker">Ibiden (4062)</span><span class="desc">AIパッケージ基板。業績裏付けあり。やや過熱。</span></div>
+      <div class="cls-item"><span class="ticker">Yaskawa (6506)</span><span class="desc">フィジカルAI。中計明確・Nvidia提携。中長期向き。</span></div>
+      <div class="cls-item"><span class="ticker">CRM (NYSE)</span><span class="desc">AIエージェント収益化の試金石。決算5/27。</span></div>
+      <div class="cls-item"><span class="ticker">MSFT (NASDAQ)</span><span class="desc">AI年率$37B達成の安定成長株。やや割高。</span></div>
+      <div class="cls-item"><span class="ticker">DELL (NYSE)</span><span class="desc">AIサーバー需要のバロメーター。決算5/28。</span></div>
+    </div>
+    <div class="cls-col cls-def">
+      <h3>🏰 守り（安定・ディフェンシブ）</h3>
+      <div class="cls-item"><span class="ticker">三菱重工 (7011)</span><span class="desc">防衛費増額の本命。過去最高益。政策株。</span></div>
+      <div class="cls-item"><span class="ticker">IHI (7013)</span><span class="desc">航空エンジン+防衛+水素。3軸分散。</span></div>
+      <div class="cls-item"><span class="ticker">COST (NASDAQ)</span><span class="desc">会員制小売の王者。インフレ耐性。決算5/28。</span></div>
+      <div class="cls-item"><span class="ticker">AZO (NYSE)</span><span class="desc">景気後退ヘッジ。金利高→旧車維持需要。本日決算。</span></div>
+      <div class="cls-item"><span class="ticker">TSLA (NASDAQ)</span><span class="desc">本日+3.14%回復。長期ロボット視点なら中間〜守り。</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ===== 貴金属・暗号資産の詳細 ===== -->
+<div class="section">
+  <div class="section-head"><span class="section-icon">🥇</span><h2>貴金属 深掘り分析</h2></div>
+  <div class="grid-2">
+    <div>
+      <table class="tbl">
+        <thead><tr><th>資産</th><th>現在値</th><th>24h</th><th>YoY</th><th>主要機関予測（2026末）</th></tr></thead>
+        <tbody>
+          <tr><td><strong>金 (Gold)</strong></td><td>$4,579/oz</td><td><span class="pill pill-pos">+1.39%</span></td><td>+36.84%</td><td>JPM: $5,055〜$6,300 / Goldman: $5,400</td></tr>
+          <tr><td><strong>銀 (Silver)</strong></td><td>$75.68/oz</td><td><span class="pill pill-neg">−3.07%</span></td><td>+127%</td><td>JPM: $81/oz / HSBC: $75/oz</td></tr>
+          <tr><td><strong>プラチナ</strong></td><td>$1,953/oz</td><td><span class="pill pill-pos">上昇基調</span></td><td>堅調</td><td>2026年供給赤字 297k oz予測</td></tr>
+          <tr><td><strong>WTI原油</strong></td><td>~$97〜102</td><td><span class="pill pill-neg">下落圧力</span></td><td>高止まり</td><td>Hormuz再開で段階的低下見通し</td></tr>
+        </tbody>
+      </table>
+      <div class="est-box" style="margin-top:10px;">【推測】金のJPM年末目標$5,055〜$6,300は、①中銀需要継続、②インフレ高止まり、③地政学リスク、③ドル安圧力を織り込んだシナリオ。</div>
+      <div class="risk-box" style="margin-top:6px;">【リスク】イラン停戦が定着し原油が大幅下落、かつFRBが利下げに転じた場合は金の下落圧力となりうる。</div>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:10px;">貴金属 リスク指標</div>
+      <div class="meter-row"><div class="meter-lbl">インフレヘッジ需要</div><div class="meter-bar"><div class="meter-fill" style="width:85%;background:var(--teal);"></div></div><div class="meter-val" style="color:var(--teal);">極高</div></div>
+      <div class="meter-row"><div class="meter-lbl">中銀購入需要</div><div class="meter-bar"><div class="meter-fill" style="width:80%;background:var(--teal);"></div></div><div class="meter-val" style="color:var(--teal);">高</div></div>
+      <div class="meter-row"><div class="meter-lbl">地政学感応度</div><div class="meter-bar"><div class="meter-fill" style="width:78%;background:var(--red);"></div></div><div class="meter-val dn">高</div></div>
+      <div class="meter-row"><div class="meter-lbl">金 バリュエーション</div><div class="meter-bar"><div class="meter-fill" style="width:72%;background:var(--yellow);"></div></div><div class="meter-val fl">過熱気味</div></div>
+      <div class="meter-row"><div class="meter-lbl">銀 工業需要</div><div class="meter-bar"><div class="meter-fill" style="width:70%;background:var(--green);"></div></div><div class="meter-val up">高</div></div>
+      <div class="meter-row"><div class="meter-lbl">プラチナ 供給赤字</div><div class="meter-bar"><div class="meter-fill" style="width:68%;background:var(--green);"></div></div><div class="meter-val up">要注目</div></div>
+      <div style="margin-top:14px;background:var(--teal-dim);border:1px solid var(--teal);border-radius:8px;padding:12px;font-size:11px;color:#99f6e4;line-height:1.75;">
+        <strong style="color:var(--teal);">銀の急落 ($75.68, −3.07%) について</strong><br/>
+        イラン停戦楽観論による工業金属全般の調整。しかし銀のYoY+127%の上昇は実需（太陽光パネル・EV・電子部品）に裏打ちされており、押し目形成の可能性を検討する価値がある。$70〜73が次のサポートとして注目。
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-head"><span class="section-icon">₿</span><h2>暗号資産 深掘り分析</h2></div>
+  <div class="grid-2">
+    <div>
+      <table class="tbl">
+        <thead><tr><th>資産</th><th>現在値</th><th>24h</th><th>時価総額</th><th>特記事項</th></tr></thead>
+        <tbody>
+          <tr><td><strong>BTC</strong></td><td>$76,754</td><td><span class="pill pill-pos">+0.4%</span></td><td>$1.33T</td><td>米・イスラエル空爆に耐性。ETFフロー安定。</td></tr>
+          <tr><td><strong>ETH</strong></td><td>$2,114</td><td><span class="pill pill-pos">+0.6%</span></td><td>$233B</td><td>$2,080〜$2,140レンジ推移継続</td></tr>
+          <tr><td><strong>SOL</strong></td><td>$83.89</td><td><span class="pill pill-neu">横ばい</span></td><td>—</td><td>狭レンジ推移</td></tr>
+          <tr><td><strong>XRP</strong></td><td>~$1.36</td><td><span class="pill pill-neg">弱含み</span></td><td>—</td><td>$1.36サポート付近</td></tr>
+          <tr><td><strong>総時価総額</strong></td><td>$2.57T</td><td><span class="pill pill-pos">+2.39%</span></td><td>—</td><td>BTCドミナンス 60%</td></tr>
+        </tbody>
+      </table>
+      <div class="fact-box" style="margin-top:10px;">【事実】CLARITY Act上院銀行委員会 15-9 通過確認。BTCのBlackRock IBIT ETF流入が安定的に継続。</div>
+      <div class="est-box" style="margin-top:6px;">【推測】CLARITY Act成立確率 予測市場で60%。成立なら機関投資家の暗号資産参入が加速し、BTC$80K〜$90Kへの次のフェーズ入りが想定される。</div>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:700;color:var(--orange);margin-bottom:10px;">暗号資産 リスク指標</div>
+      <div class="meter-row"><div class="meter-lbl">BTC 短期センチメント</div><div class="meter-bar"><div class="meter-fill" style="width:60%;background:var(--green);"></div></div><div class="meter-val up">やや強気</div></div>
+      <div class="meter-row"><div class="meter-lbl">規制リスク（米国）</div><div class="meter-bar"><div class="meter-fill" style="width:35%;background:var(--green);"></div></div><div class="meter-val up">低下中</div></div>
+      <div class="meter-row"><div class="meter-lbl">地政学感応度</div><div class="meter-bar"><div class="meter-fill" style="width:45%;background:var(--yellow);"></div></div><div class="meter-val fl">低下傾向</div></div>
+      <div class="meter-row"><div class="meter-lbl">ETF機関資金流入</div><div class="meter-bar"><div class="meter-fill" style="width:75%;background:var(--green);"></div></div><div class="meter-val up">旺盛</div></div>
+      <div class="meter-row"><div class="meter-lbl">アルトシーズン</div><div class="meter-bar"><div class="meter-fill" style="width:39%;background:var(--yellow);"></div></div><div class="meter-val fl">39/100</div></div>
+      <div class="meter-row"><div class="meter-lbl">AI×クリプト ナラティブ</div><div class="meter-bar"><div class="meter-fill" style="width:78%;background:var(--purple);"></div></div><div class="meter-val" style="color:var(--purple);">強い</div></div>
+      <div class="risk-box" style="margin-top:10px;">【リスク】Warsh FRB議長がインフレ強硬発言→長期金利上昇→リスク資産全般に売り圧力。BTCは$70K割れると損切り連鎖の可能性。</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ===== 主要リスク一覧 ===== -->
+<div class="section">
+  <div class="section-head"><span class="section-icon">⚠️</span><h2>主要リスクシナリオ（今週・来週）</h2></div>
+  <table class="tbl">
+    <thead>
+      <tr><th>リスク</th><th>発生確率</th><th>影響度</th><th>影響を受ける資産</th><th>ヘッジ手段</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>イラン停戦崩壊・Hormuz再封鎖</strong></td>
+        <td><span class="pill pill-warn">中 30〜40%</span></td>
+        <td><span class="pill pill-neg">極めて高</span></td>
+        <td>株式全般・原油急騰・インフレ加速</td>
+        <td>金・防衛株・短期債</td>
+      </tr>
+      <tr>
+        <td><strong>Warsh FRB議長がタカ派発言</strong></td>
+        <td><span class="pill pill-warn">中高 50%</span></td>
+        <td><span class="pill pill-warn">高</span></td>
+        <td>グロース株・REIT・長期債・BTC</td>
+        <td>金融セクター・短期債</td>
+      </tr>
+      <tr>
+        <td><strong>MRVL / CRM決算失望</strong></td>
+        <td><span class="pill pill-pos">低 20%</span></td>
+        <td><span class="pill pill-warn">中高</span></td>
+        <td>AI・半導体株全般 / SaaS株</td>
+        <td>コスト削減・守り銘柄</td>
+      </tr>
+      <tr>
+        <td><strong>PCE / GDP第2次速報が悪化</strong></td>
+        <td><span class="pill pill-warn">中 35%</span></td>
+        <td><span class="pill pill-warn">高</span></td>
+        <td>株式・BTC・長期債</td>
+        <td>金・ドル・短期債</td>
+      </tr>
+      <tr>
+        <td><strong>S&amp;P 500 CAPE比40超の調整</strong></td>
+        <td><span class="pill pill-warn">中 40%</span></td>
+        <td><span class="pill pill-neg">高</span></td>
+        <td>米国株全般</td>
+        <td>日本株・新興国・金</td>
+      </tr>
+      <tr>
+        <td><strong>SoftBank急落（過熱調整）</strong></td>
+        <td><span class="pill pill-warn">中 40%</span></td>
+        <td><span class="pill pill-warn">中</span></td>
+        <td>日経平均・AI関連日本株</td>
+        <td>分散・利確</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<hr class="divider"/>
+
+<!-- ===== 情報源 ===== -->
+<div class="section">
+  <div class="section-head"><span class="section-icon">📚</span><h2>情報源 &amp; データソース</h2></div>
+  <ul class="src-list">
+    <li><a href="https://www.cnbc.com/2026/05/22/stock-market-next-week-outlook-for-may-25-29-2026.html">CNBC — Stock market outlook May 25–29, 2026</a></li>
+    <li><a href="https://www.schwab.com/learn/story/stock-market-update-open">Schwab — Market Update: Stocks Up Early on Iran Talks, Warsh</a></li>
+    <li><a href="https://www.bloomberg.com/news/articles/2026-05-25/softbank-shares-hit-record-high-with-lift-from-openai-ipo-hopes">Bloomberg — SoftBank Shares Hit Record With OpenAI IPO Hopes</a></li>
+    <li><a href="https://www.cnbc.com/2026/05/22/softbank-extends-scorching-rally-surging-over-12percent-as-investors-crowd-into-ai-trade.html">CNBC — SoftBank adds $61B market cap in two days</a></li>
+    <li><a href="https://moneymorning.com/2026/05/25/marvell-technology-mrvl-stock-earnings-may-2026">Money Morning — Marvell Technology: Up 100% in 2026</a></li>
+    <li><a href="https://www.tradingkey.com/analysis/stocks/us-stocks/261924282-marvell-mrvl-earnings-ai-optical-datacenter-trainium-analyst-upgrades-valuation-tradingkey">TradingKey — Marvell Earnings Preview</a></li>
+    <li><a href="https://intellectia.ai/blog/nvda-stock-earnings-analysis-may-2026">Intellectia — Nvidia Earnings May 2026: Record $81.6B Revenue</a></li>
+    <li><a href="https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-tuesday-may-26-2026-prices-hold-despite-us-israel-airstrikes-133728864.html">Yahoo Finance — BTC/ETH prices May 26: Hold despite US-Israel airstrikes</a></li>
+    <li><a href="https://fortune.com/article/current-price-of-gold-05-26-2026/">Fortune — Current price of gold May 26, 2026</a></li>
+    <li><a href="https://www.indexbox.io/blog/precious-metals-update-gold-and-silver-trends-in-may-2026/">IndexBox — Gold &amp; Silver Market Analysis May 2026</a></li>
+    <li><a href="https://www.cnbc.com/2026/05/14/clarity-act-congress-crypto-senate.html">CNBC — Clarity Act clears Senate Banking Committee</a></li>
+    <li><a href="https://www.nikkei.com/article/DGXZQOFL2844S0Y5A121C2000000/">日経 — 安川電機：フィジカルAI戦略</a></li>
+    <li><a href="https://finance.biggo.jp/news/cmM4T54B2jrwCtgljqnA">BigGo Finance — 安川電機 新中計 AI ロボ</a></li>
+    <li><a href="https://tickeron.com/trading-investing-101/q1-2026-earnings-preview-may-2529-2026--tcom-mrvl-crm-pdd-dell-ry-td-adsk/">Tickeron — Q1 2026 Earnings Preview: MRVL, CRM, DELL</a></li>
+    <li><a href="https://go.sbisec.co.jp/media/report/dom_senryaku/dom_senryaku_251219.html">SBI証券 — 2026年有望銘柄</a></li>
+    <li><a href="https://toyokeizai.net/articles/-/909315">東洋経済 — 三菱重工・川崎重工・IHI 防衛三社</a></li>
+    <li><a href="https://www.ainvest.com/news/japan-strategic-bet-ai-semiconductors-high-conviction-opportunity-2026-2512/">AInvest — Japan's Strategic Bet on AI and Semiconductors 2026</a></li>
+    <li><a href="https://www.jpmorgan.com/insights/global-research/commodities/gold-prices">J.P. Morgan — Gold Price Forecasts 2026</a></li>
+    <li><a href="https://npr.org/2026/04/08/nx-s1-5776818/wall-street-stocks-oil-trump-iran-ceasefire">NPR — Oil plunges and stocks soar after US-Iran ceasefire</a></li>
+  </ul>
+</div>
+
+<!-- ===== DISCLAIMER ===== -->
+<div class="disc">
+  <strong>⚠ 重要な免責事項（必ずお読みください）</strong><br/>
+  本レポートは公開情報をもとにAI（Claude Sonnet 4.6）が作成した情報提供資料であり、<strong>特定の銘柄・金融商品への投資を推奨するものではありません。</strong>
+  「事実」として記載した情報も確認できた時点の情報であり、今後変動する場合があります。「推測・予測」の項目はアナリスト予想・観測を含み、実現を保証するものではありません。
+  投資判断はご自身の責任と判断のもとで行ってください。過去のパフォーマンスは将来の成果を保証しません。
+  本資料は証券会社・金融機関が発行する正式な投資レポートではなく、投資助言業の登録を受けた者が作成したものでもありません。
+  <strong>「必ず上がる」「テンバガー確定」などの表現は本レポートには一切含まれていません。</strong>
+</div>
+
+<div class="footer">
+  <span>作成：AI株式リサーチシステム（Claude Sonnet 4.6）｜2026年5月26日</span>
+  <span>対象市場：東証（プライム・スタンダード・グロース）｜NYSE｜NASDAQ｜暗号資産｜貴金属</span>
+  <span>次回更新推奨：5/27（Marvell・Salesforce決算後）｜5/28（PCE・GDP発表後）</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>市場分析レポート — 2026年5月25日</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2333;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --green: #3fb950;
+      --green-dim: #1a3a1f;
+      --red: #f85149;
+      --red-dim: #3d1a1a;
+      --yellow: #d29922;
+      --yellow-dim: #2e2208;
+      --blue: #58a6ff;
+      --blue-dim: #0d2340;
+      --purple: #bc8cff;
+      --purple-dim: #2a1a40;
+      --accent: #1f6feb;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 24px;
+    }
+
+    /* Header */
+    .report-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+      margin-bottom: 28px;
+    }
+    .report-header .label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .report-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .report-header .subtitle {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .badge-holiday { background: var(--yellow-dim); color: var(--yellow); border: 1px solid var(--yellow); }
+    .badge-live    { background: var(--green-dim);  color: var(--green);  border: 1px solid var(--green);  }
+    .badge-alert   { background: var(--red-dim);    color: var(--red);    border: 1px solid var(--red);    }
+
+    /* Grid layouts */
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 28px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+    @media (max-width: 900px) { .grid-4, .grid-3 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .grid-4, .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+    /* Index cards */
+    .index-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .index-card .idx-name { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+    .index-card .idx-value { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .index-card .idx-change { font-size: 13px; font-weight: 600; }
+    .index-card .idx-note { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .up   { color: var(--green); }
+    .down { color: var(--red); }
+    .flat { color: var(--yellow); }
+
+    /* Section titles */
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+
+    /* Event cards */
+    .event-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .event-card.high    { border-left-color: var(--red); }
+    .event-card.medium  { border-left-color: var(--yellow); }
+    .event-card.positive{ border-left-color: var(--green); }
+    .event-card .ev-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .ev-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .ev-tag.geopolitical { background: var(--red-dim);    color: var(--red); }
+    .ev-tag.monetary     { background: var(--blue-dim);   color: var(--blue); }
+    .ev-tag.tech         { background: var(--purple-dim); color: var(--purple); }
+    .ev-tag.energy       { background: var(--yellow-dim); color: var(--yellow); }
+    .ev-tag.macro        { background: var(--surface2);   color: var(--muted); }
+    .ev-title { font-weight: 600; font-size: 14px; }
+    .ev-body { color: #c9d1d9; font-size: 13px; line-height: 1.7; }
+    .ev-impact { margin-top: 8px; font-size: 12px; display: flex; align-items: flex-start; gap: 6px; }
+    .ev-impact .label { color: var(--muted); white-space: nowrap; }
+
+    /* Impact table */
+    .impact-table { width: 100%; border-collapse: collapse; }
+    .impact-table th {
+      background: var(--surface2);
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .impact-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      vertical-align: top;
+    }
+    .impact-table tr:last-child td { border-bottom: none; }
+    .impact-table tr:hover td { background: var(--surface2); }
+    .pill {
+      display: inline-block;
+      padding: 1px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .pill-high     { background: var(--red-dim);    color: var(--red); }
+    .pill-medium   { background: var(--yellow-dim); color: var(--yellow); }
+    .pill-low      { background: var(--green-dim);  color: var(--green); }
+    .pill-positive { background: var(--green-dim);  color: var(--green); }
+    .pill-negative { background: var(--red-dim);    color: var(--red); }
+    .pill-neutral  { background: var(--surface2);   color: var(--muted); }
+
+    /* Calendar */
+    .calendar-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .cal-date { font-size: 11px; color: var(--blue); font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.1em; }
+    .cal-items { list-style: none; }
+    .cal-items li { padding: 3px 0; font-size: 13px; color: #c9d1d9; }
+    .cal-items li::before { content: '·'; color: var(--muted); margin-right: 8px; }
+
+    /* Meter bar */
+    .meter-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .meter-label { width: 140px; font-size: 12px; color: var(--muted); flex-shrink: 0; }
+    .meter-bar { flex: 1; background: var(--surface2); border-radius: 4px; height: 8px; overflow: hidden; }
+    .meter-fill { height: 100%; border-radius: 4px; }
+    .meter-value { width: 50px; font-size: 12px; font-weight: 600; text-align: right; }
+
+    /* Summary box */
+    .summary-box {
+      background: var(--blue-dim);
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+    }
+    .summary-box h3 { color: var(--blue); font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+    .summary-box p  { color: #c9d1d9; font-size: 13px; line-height: 1.75; }
+
+    /* Sector grid */
+    .sector-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    @media (max-width: 600px) { .sector-grid { grid-template-columns: repeat(2, 1fr); } }
+    .sector-tile {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+    }
+    .sector-tile .s-name { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+    .sector-tile .s-trend { font-size: 18px; margin-bottom: 2px; }
+    .sector-tile .s-label { font-size: 11px; font-weight: 600; }
+
+    /* Crypto colors */
+    :root {
+      --orange: #f0883e;
+      --orange-dim: #2d1700;
+    }
+    .ev-tag.crypto { background: var(--orange-dim); color: var(--orange); }
+    .summary-box.crypto {
+      background: var(--orange-dim);
+      border-color: var(--orange);
+    }
+    .summary-box.crypto h3 { color: var(--orange); }
+    .crypto-divider {
+      border: none;
+      border-top: 2px dashed var(--border);
+      margin: 36px 0 32px;
+    }
+    .pill-warning { background: var(--orange-dim); color: var(--orange); }
+    .badge-crypto { background: var(--orange-dim); color: var(--orange); border: 1px solid var(--orange); }
+
+    /* Footer */
+    .footer {
+      margin-top: 36px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 11px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .sources { margin-top: 16px; }
+    .sources a { color: var(--blue); text-decoration: none; font-size: 11px; }
+    .sources a:hover { text-decoration: underline; }
+    .src-list { list-style: none; }
+    .src-list li { padding: 3px 0; }
+    .src-list li::before { content: '↗ '; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="report-header">
+  <div class="label">Market Intelligence Report</div>
+  <h1>グローバル市場分析
+    <span class="badge badge-holiday">US 市場休場 (Memorial Day)</span>
+  </h1>
+  <div class="subtitle">2026年5月25日（月）｜直近24時間の主要事象を重点分析</div>
+</div>
+
+<!-- ===== SUMMARY ===== -->
+<div class="summary-box">
+  <h3>エグゼクティブ・サマリー</h3>
+  <p>
+    本日（5/25）は米国メモリアルデーで<strong>NYSE・Nasdaq・CME全休場</strong>。先週末（5/22）に
+    S&amp;P 500は<strong>8週連続陽線</strong>・過去最高値圏（7,500超）で引け、強調地合いを引き継ぐ。
+    最大の変数は①<strong>米・イラン和平交渉</strong>の進捗（原油価格$100超の高止まり）、
+    ②本日就任した<strong>新FRB議長 Kevin Warsh</strong>の初動姿勢（インフレ3.8%下で利下げより利上げリスクが台頭）、
+    ③<strong>SoftBank主導のAI株高</strong>（日経が先週末+2.68%の63,339円）の三点。
+    週後半のPCE・GDP速報、大手決算（Salesforce・Costco・Dell等）が次の方向性を決める。
+  </p>
+</div>
+
+<!-- ===== INDEX SNAPSHOT ===== -->
+<div class="section-title">主要指数スナップショット（直近終値）</div>
+<div class="grid-4">
+  <div class="index-card">
+    <div class="idx-name">S&amp;P 500</div>
+    <div class="idx-value up">7,480</div>
+    <div class="idx-change up">▲ +0.40% (5/22)</div>
+    <div class="idx-note">8週連続陽線 / 過去最高値圏</div>
+  </div>
+  <div class="index-card">
+    <div class="idx-name">Nasdaq Composite</div>
+    <div class="idx-value up">~22,600</div>
+    <div class="idx-change up">▲ +0.20% (5/22)</div>
+    <div class="idx-note">8週中7週陽線</div>
+  </div>
+  <div class="index-card">
+    <div class="idx-name">Dow Jones</div>
+    <div class="idx-value up">50,580</div>
+    <div class="idx-change up">▲ +0.58% / +294pts (5/22)</div>
+    <div class="idx-note">中東和平進展で上昇</div>
+  </div>
+  <div class="index-card">
+    <div class="idx-name">日経平均</div>
+    <div class="idx-value up">63,339</div>
+    <div class="idx-change up">▲ +2.68% / +1,655pts (5/22)</div>
+    <div class="idx-note">週間予想レンジ: 61,500〜65,500</div>
+  </div>
+</div>
+
+<div class="grid-4">
+  <div class="index-card">
+    <div class="idx-name">WTI 原油</div>
+    <div class="idx-value flat">$101.94</div>
+    <div class="idx-change down">▼ −3.0% (5/22)</div>
+    <div class="idx-note">イラン和平提案で下落</div>
+  </div>
+  <div class="index-card">
+    <div class="idx-name">Brent 原油</div>
+    <div class="idx-value flat">$108.17</div>
+    <div class="idx-change down">▼ −1.9% (5/22)</div>
+    <div class="idx-note">Hormuz供給不安が下支え</div>
+  </div>
+  <div class="index-card">
+    <div class="idx-name">米国インフレ率</div>
+    <div class="idx-value down">3.8%</div>
+    <div class="idx-change down">高止まり継続</div>
+    <div class="idx-note">シェルター価格4月に倍増</div>
+  </div>
+  <div class="index-card">
+    <div class="idx-name">FOMC 年内利下げ確率</div>
+    <div class="idx-value flat">&lt; 3%</div>
+    <div class="idx-change flat">事実上ゼロ</div>
+    <div class="idx-note">利上げ再考シナリオ浮上</div>
+  </div>
+</div>
+
+<!-- ===== 24H EVENTS ===== -->
+<div class="section-title">直近24時間の主要イベント &amp; 市場インパクト</div>
+
+<div class="event-card high">
+  <div class="ev-header">
+    <span class="ev-tag monetary">金融政策</span>
+    <span class="ev-title">Kevin Warsh — 新FRB議長が本日就任</span>
+    <span class="badge badge-alert">最重要</span>
+  </div>
+  <div class="ev-body">
+    Kevin Warshが本日（5/25）FRB議長に正式就任。5/13にSenate 54-45（史上最僅差）で承認。
+    トランプ大統領の「利下げ要求」で選ばれたが、現実は<strong>インフレ3.8%・原油$100超・シェルター価格急騰</strong>で
+    利下げどころか<strong>利上げ再考を余儀なくされる</strong>局面。Warsh自身は「インフレ最優先・発言最小化・権限縮小」を公言。
+    市場は年内利下げを3%以下の確率しか織り込んでおらず、金利高止まりが続く見通し。
+  </div>
+  <div class="ev-impact">
+    <span class="label">株式への影響:</span>
+    <span>グロース株・ハイテク株に逆風。長期金利上昇懸念でバリュエーション圧縮リスク。金融セクターは金利高止まりで相対的恩恵。</span>
+  </div>
+</div>
+
+<div class="event-card high">
+  <div class="ev-header">
+    <span class="ev-tag geopolitical">地政学</span>
+    <span class="ev-title">米・イラン和平交渉 — イランが更新提案を提出</span>
+    <span class="badge badge-alert">継続監視</span>
+  </div>
+  <div class="ev-body">
+    5/22、イランがパキスタンを通じて<strong>更新された和平提案</strong>を仲介国に送付。
+    トランプ大統領は「交渉は最終局面」と発言し、WTI原油は<strong>−3%の$101.94</strong>まで下落。
+    Hormuz海峡封鎖前には世界エネルギー供給の20%が通過していたが、現在は
+    <strong>日量1,400万バレル（世界供給の14%）が市場から失われた</strong>状態。
+    Fitch/BMIは2026年Brent平均を$81.5→$90に上方修正済み。
+  </div>
+  <div class="ev-impact">
+    <span class="label">株式への影響:</span>
+    <span>和平進展→エネルギー株・輸送株に下落圧力。航空・化学・素材株には追い風。合意失敗なら原油再高騰でインフレ圧力が急増。</span>
+  </div>
+</div>
+
+<div class="event-card positive">
+  <div class="ev-header">
+    <span class="ev-tag tech">テクノロジー</span>
+    <span class="ev-title">SoftBank — 2日間で合計+32%急騰 (OpenAI・SB Energy IPO観測)</span>
+    <span class="badge badge-live">AI相場継続</span>
+  </div>
+  <div class="ev-body">
+    5/21 SoftBank +20%、5/22 さらに+12%（累計+32%超）。
+    <strong>OpenAIおよびSB Energy（再エネ子会社）の米国IPO推進</strong>報道がトリガー。
+    これに伴い日本のAI関連株も全面高：
+    <strong>Kioxia Holdings +3.7%・Fujikura +7.8%・Ibiden +7.7%</strong>。
+    日経平均PER 22.1倍（TOPIX 16.9倍）と高バリュエーションだが、AI成長期待が正当化。
+  </div>
+  <div class="ev-impact">
+    <span class="label">株式への影響:</span>
+    <span>半導体・AI・クラウドインフラ全般に波及。米国ではNvidiaなど半導体株への追い風継続。ただしNT比率が史上最高値16.37倍で過熱感も。</span>
+  </div>
+</div>
+
+<div class="event-card medium">
+  <div class="ev-header">
+    <span class="ev-tag macro">マクロ</span>
+    <span class="ev-title">米国 メモリアルデー休場 — 流動性低下に注意</span>
+  </div>
+  <div class="ev-body">
+    本日（5/25）は米国主要市場・CMEデリバティブ全休場。
+    日本・欧州市場はUS引け値なしで始動するため、<strong>薄商い・ボラティリティ拡大リスク</strong>がある。
+    翌5/26（火）の米国再開時に中東情勢ヘッドラインや新Fed議長の初発言が出れば、
+    ギャップアップ・ダウンに警戒が必要。
+  </div>
+  <div class="ev-impact">
+    <span class="label">株式への影響:</span>
+    <span>東証は薄商い。機関投資家が先物でヘッジを積み増す可能性あり。個人投資家のレバレッジ解消も生じやすい局面。</span>
+  </div>
+</div>
+
+<!-- ===== SECTOR IMPACT ===== -->
+<div class="section-title">セクター別影響度マップ（現時点評価）</div>
+<div class="grid-2">
+  <div>
+    <table class="impact-table">
+      <thead>
+        <tr>
+          <th>セクター</th>
+          <th>主因</th>
+          <th>影響</th>
+          <th>方向性</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>AI・半導体</strong></td>
+          <td>SoftBank急騰・OpenAI IPO</td>
+          <td><span class="pill pill-high">高</span></td>
+          <td><span class="pill pill-positive">強気</span></td>
+        </tr>
+        <tr>
+          <td><strong>金融・銀行</strong></td>
+          <td>Warsh就任・金利高止まり</td>
+          <td><span class="pill pill-high">高</span></td>
+          <td><span class="pill pill-positive">強気</span></td>
+        </tr>
+        <tr>
+          <td><strong>エネルギー</strong></td>
+          <td>米・イラン和平交渉進展</td>
+          <td><span class="pill pill-high">高</span></td>
+          <td><span class="pill pill-negative">弱気</span></td>
+        </tr>
+        <tr>
+          <td><strong>ハイテク（グロース）</strong></td>
+          <td>長期金利上昇リスク</td>
+          <td><span class="pill pill-medium">中</span></td>
+          <td><span class="pill pill-neutral">中立</span></td>
+        </tr>
+        <tr>
+          <td><strong>航空・輸送</strong></td>
+          <td>原油下落で燃料費低下</td>
+          <td><span class="pill pill-medium">中</span></td>
+          <td><span class="pill pill-positive">強気</span></td>
+        </tr>
+        <tr>
+          <td><strong>素材・化学</strong></td>
+          <td>原油・コスト低下期待</td>
+          <td><span class="pill pill-medium">中</span></td>
+          <td><span class="pill pill-positive">強気</span></td>
+        </tr>
+        <tr>
+          <td><strong>不動産（REIT）</strong></td>
+          <td>金利高止まり・シェルター高</td>
+          <td><span class="pill pill-high">高</span></td>
+          <td><span class="pill pill-negative">弱気</span></td>
+        </tr>
+        <tr>
+          <td><strong>防衛・宇宙</strong></td>
+          <td>中東情勢・地政学リスク</td>
+          <td><span class="pill pill-medium">中</span></td>
+          <td><span class="pill pill-positive">強気</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <div class="section-title">リスク指標（定性評価）</div>
+    <div class="meter-row">
+      <div class="meter-label">地政学リスク</div>
+      <div class="meter-bar"><div class="meter-fill" style="width:78%; background:var(--red);"></div></div>
+      <div class="meter-value down">高</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">インフレリスク</div>
+      <div class="meter-bar"><div class="meter-fill" style="width:75%; background:var(--red);"></div></div>
+      <div class="meter-value down">高</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">金利引き上げリスク</div>
+      <div class="meter-bar"><div class="meter-fill" style="width:65%; background:var(--yellow);"></div></div>
+      <div class="meter-value flat">中高</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">AI相場継続性</div>
+      <div class="meter-bar"><div class="meter-fill" style="width:80%; background:var(--green);"></div></div>
+      <div class="meter-value up">強</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">企業業績（決算）</div>
+      <div class="meter-bar"><div class="meter-fill" style="width:70%; background:var(--green);"></div></div>
+      <div class="meter-value up">好調</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">流動性リスク（本日）</div>
+      <div class="meter-bar"><div class="meter-fill" style="width:60%; background:var(--yellow);"></div></div>
+      <div class="meter-value flat">中</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">市場センチメント</div>
+      <div class="meter-bar"><div class="meter-fill" style="width:72%; background:var(--green);"></div></div>
+      <div class="meter-value up">強気</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== WEEK AHEAD ===== -->
+<div class="section-title">今週の注目スケジュール（5/25〜5/29）</div>
+<div class="grid-3">
+  <div class="calendar-item">
+    <div class="cal-date">5/25（月）— 本日</div>
+    <ul class="cal-items">
+      <li>US市場 <strong>休場</strong>（メモリアルデー）</li>
+      <li>Kevin Warsh FRB議長 正式就任</li>
+      <li>日本：4月外食産業売上</li>
+      <li>日本：4月全国百貨店売上</li>
+      <li>中東和平交渉 続報待ち</li>
+    </ul>
+  </div>
+  <div class="calendar-item">
+    <div class="cal-date">5/26（火）</div>
+    <ul class="cal-items">
+      <li>米：5月消費者信頼感指数</li>
+      <li>決算：AutoZone (AZO)</li>
+      <li>決算：Zscaler (ZS)</li>
+      <li>Warsh議長 初の公開発言に注目</li>
+    </ul>
+  </div>
+  <div class="calendar-item">
+    <div class="cal-date">5/27（水）</div>
+    <ul class="cal-items">
+      <li>米：4月新築住宅販売件数</li>
+      <li>決算：Marvell Technology (MRVL)</li>
+      <li>決算：Salesforce (CRM)</li>
+      <li>決算：Snowflake (SNOW)</li>
+      <li>決算：Synopsys (SNPS)</li>
+    </ul>
+  </div>
+  <div class="calendar-item">
+    <div class="cal-date">5/28（木）— <strong style="color:var(--red)">最重要</strong></div>
+    <ul class="cal-items">
+      <li>米：Q1 GDP第2次速報値</li>
+      <li>米：4月 <strong>PCE物価指数</strong></li>
+      <li>決算：Dell (DELL)</li>
+      <li>決算：Costco (COST)</li>
+      <li>決算：Dollar Tree (DLTR)</li>
+      <li>決算：MongoDB (MDB)</li>
+    </ul>
+  </div>
+  <div class="calendar-item">
+    <div class="cal-date">5/29（金）</div>
+    <ul class="cal-items">
+      <li>決算：AutoDesk (ADSK)</li>
+      <li>決算：Gap (GAP)</li>
+      <li>米・イラン交渉：週内合意有無が焦点</li>
+      <li>月末リバランスフロー</li>
+    </ul>
+  </div>
+  <div class="calendar-item">
+    <div class="cal-date">日本市場 週間フォーカス</div>
+    <ul class="cal-items">
+      <li>日経予想レンジ: 61,500〜65,500円</li>
+      <li>SoftBank系AI株の継続性</li>
+      <li>BOJ 追加利上げ観測（銀行株）</li>
+      <li>PCE発表後のドル円動向</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== WATCH LIST ===== -->
+<div class="section-title">注目銘柄・資産クラス</div>
+<div class="grid-3">
+  <div class="calendar-item">
+    <div class="cal-date" style="color:var(--purple)">AI・半導体（強気継続）</div>
+    <ul class="cal-items">
+      <li>SoftBank (9984) — OpenAI IPO観測</li>
+      <li>Fujikura (5803) — 先週+7.8%</li>
+      <li>Ibiden (4062) — 先週+7.7%</li>
+      <li>Nvidia (NVDA) — AI需要</li>
+      <li>Marvell (MRVL) — 5/27決算</li>
+    </ul>
+  </div>
+  <div class="calendar-item">
+    <div class="cal-date" style="color:var(--green)">エネルギー低下恩恵</div>
+    <ul class="cal-items">
+      <li>航空株全般（燃料費低下）</li>
+      <li>化学メーカー（原材料費）</li>
+      <li>Costco (COST) — 5/28決算</li>
+      <li>Dollar Tree (DLTR) — コスト改善</li>
+    </ul>
+  </div>
+  <div class="calendar-item">
+    <div class="cal-date" style="color:var(--red)">リスク要因（売り圧力）</div>
+    <ul class="cal-items">
+      <li>エネルギー株（原油下落）</li>
+      <li>REIT（金利高止まり）</li>
+      <li>長期デュレーション債</li>
+      <li>新興国通貨（ドル高圧力）</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== CRYPTO DIVIDER ===== -->
+<hr class="crypto-divider" />
+
+<!-- ===== CRYPTO HEADER ===== -->
+<div class="report-header" style="margin-top:0; margin-bottom:24px;">
+  <div class="label">Crypto Asset Analysis</div>
+  <h1 style="font-size:22px;">暗号資産市場分析
+    <span class="badge badge-crypto">24/7 取引継続中</span>
+  </h1>
+  <div class="subtitle">直近24時間の主要事象を重点分析 — BTC / ETH / SOL / XRP / アルトコイン</div>
+</div>
+
+<!-- ===== CRYPTO SUMMARY ===== -->
+<div class="summary-box crypto">
+  <h3>暗号資産 エグゼクティブ・サマリー</h3>
+  <p>
+    BTCは5/23にトランプ大統領「イラン和平合意ほぼ妥結」発言を受けて<strong>$75,000割れから急反発（+4.18%）</strong>し、
+    $76,578付近で推移。一方、ETH・SOL・XRPは<strong>レンジ相場が継続</strong>し上値重い。
+    最大の制度的カタリストは<strong>CLARITY Act（米デジタル資産規制法案）</strong>が上院銀行委員会を通過（15-9可決）した点で、
+    今年中の成立確率は予測市場で60%。ただし<strong>Bitcoin優勢シーズン（BTC dominance 60%）</strong>が続くなかアルトコインシーズン指数は39/100と低迷。
+    AI関連トークンへの資金ローテーションと、メモリアルデーによる<strong>流動性薄化</strong>が本日の特記事項。
+  </p>
+</div>
+
+<!-- ===== CRYPTO PRICE CARDS ===== -->
+<div class="section-title">主要暗号資産 価格スナップショット（直近データ）</div>
+<div class="grid-4">
+  <div class="index-card" style="border-top: 2px solid var(--orange);">
+    <div class="idx-name">Bitcoin (BTC)</div>
+    <div class="idx-value up">$76,578</div>
+    <div class="idx-change up">▲ +4.18% (5/23)</div>
+    <div class="idx-note">$75K割れから急反発 / RSI 40.58 (中立)</div>
+  </div>
+  <div class="index-card" style="border-top: 2px solid var(--purple);">
+    <div class="idx-name">Ethereum (ETH)</div>
+    <div class="idx-value flat">$2,116</div>
+    <div class="idx-change flat">▲ +0.8% (5/21)</div>
+    <div class="idx-note">$2,080〜$2,140レンジ継続 / ブレイクアウト未達</div>
+  </div>
+  <div class="index-card" style="border-top: 2px solid var(--blue);">
+    <div class="idx-name">Solana (SOL)</div>
+    <div class="idx-value flat">$83.89</div>
+    <div class="idx-change flat">狭レンジ推移 (5/23)</div>
+    <div class="idx-note">短期回復の兆しもブレイクなし</div>
+  </div>
+  <div class="index-card" style="border-top: 2px solid var(--red);">
+    <div class="idx-name">XRP</div>
+    <div class="idx-value down">$1.36</div>
+    <div class="idx-change down">▼ $1.36サポート割れ後回復</div>
+    <div class="idx-note">弱気トレンド継続 / 複数週の下落基調</div>
+  </div>
+</div>
+
+<div class="grid-4">
+  <div class="index-card">
+    <div class="idx-name">暗号資産 総時価総額</div>
+    <div class="idx-value up">$2.57T</div>
+    <div class="idx-change up">▲ +2.39% (24h)</div>
+    <div class="idx-note">前日比プラス圏を維持</div>
+  </div>
+  <div class="index-card">
+    <div class="idx-name">24h 総取引量</div>
+    <div class="idx-value flat">$74.74B</div>
+    <div class="idx-change down">▼ −10.43% (24h)</div>
+    <div class="idx-note">出来高縮小 → 方向感に乏しい</div>
+  </div>
+  <div class="index-card">
+    <div class="idx-name">BTC ドミナンス</div>
+    <div class="idx-value flat">60.0%</div>
+    <div class="idx-change flat">Bitcoin 優勢シーズン</div>
+    <div class="idx-note">アルトコインへの資金分散は限定的</div>
+  </div>
+  <div class="index-card">
+    <div class="idx-name">Altcoin Season Index</div>
+    <div class="idx-value down">39 / 100</div>
+    <div class="idx-change down">Bitcoin Season 域内</div>
+    <div class="idx-note">75以上でアルトシーズン / 現在は低水準</div>
+  </div>
+</div>
+
+<!-- ===== CRYPTO 24H EVENTS ===== -->
+<div class="section-title">直近24時間の暗号資産 主要イベント</div>
+
+<div class="event-card positive">
+  <div class="ev-header">
+    <span class="ev-tag crypto">価格アクション</span>
+    <span class="ev-title">BTC — イラン和平進展で$75K割れから急反発 (+4.18%)</span>
+    <span class="badge badge-live">最重要</span>
+  </div>
+  <div class="ev-body">
+    5/23、トランプ大統領が「イランとの和平覚書はほぼ合意された」と発言。
+    直前まで<strong>$75,000を割り込んで約1か月ぶりの安値</strong>を付けていたBTCが急反発し$76,578まで回復（+4.18%）。
+    暗号資産市場はリスクオン資産として<strong>地政学・インフレリスクに敏感</strong>に反応しており、
+    5/19にはトランプが「攻撃中止」を発表した際にも売り圧力が発生した経緯がある。
+    BTCのATH（$126,000超、2025年）から見ると現在は大幅調整水準にあり、
+    5/4には$80,836でミニ・ブレイクアウトを見せたものの再度押し返されている。
+  </div>
+  <div class="ev-impact">
+    <span class="label">価格への影響:</span>
+    <span>短期は上昇バイアス。$80K奪回が次の心理的節目。RSI 40.58と中立圏のため追加上昇余地はある。和平交渉の行方が最大の変数。</span>
+  </div>
+</div>
+
+<div class="event-card positive">
+  <div class="ev-header">
+    <span class="ev-tag monetary">規制・立法</span>
+    <span class="ev-title">CLARITY Act — 上院銀行委員会 15-9 可決（米デジタル資産規制枠組み）</span>
+    <span class="badge badge-live">制度的カタリスト</span>
+  </div>
+  <div class="ev-body">
+    5/14、米上院銀行委員会が<strong>Digital Asset Market Clarity Act（CLARITY Act）</strong>を15-9で可決。
+    下院では既に可決済みで、今年中の成立確率は<strong>予測市場で60%</strong>。
+    同法案は米国初の包括的デジタル資産規制枠組みを提供し、SECとCFTCの管轄を明確化。
+    主な論点：<strong>ステーブルコインへの利回り支払い禁止</strong>（活動連動型インセンティブは許可）、
+    トランプファミリーの暗号資産関与に対する倫理規定（民主党が要求）。
+    銀行・労働組合・法執行機関は反対、業界は歓迎。
+  </div>
+  <div class="ev-impact">
+    <span class="label">価格への影響:</span>
+    <span>長期的には規制明確化でビットコイン・主要アルトコインに強気材料。ステーブルコイン（USDT・USDC）発行体には複雑な影響。法案成立なら機関投資家参入を加速させる可能性。</span>
+  </div>
+</div>
+
+<div class="event-card positive">
+  <div class="ev-header">
+    <span class="ev-tag monetary">ETF・機関資金</span>
+    <span class="ev-title">Bitcoin ETF — 旺盛な機関資金流入が継続（BlackRock主導）</span>
+  </div>
+  <div class="ev-body">
+    5/4には<strong>BTC ETF合計$532M（3日連続流入）</strong>を記録。
+    内訳：BlackRock IBIT $335.49M、Fidelity FBTC $184.57M。
+    機関投資家の継続的な現物ETF経由の積み上げが$75K〜$80Kのゾーンを下支えしており、
+    急落時の「買いの壁」として機能。メモリアルデー（本日）は米ETF市場も休場のため
+    ETFフローは明日5/26再開後に確認。
+  </div>
+  <div class="ev-impact">
+    <span class="label">価格への影響:</span>
+    <span>中長期の構造的な上昇バイアス。ETF再開後のフロー数値が$75K〜$80K定着の鍵。流入鈍化はトレンド転換サイン。</span>
+  </div>
+</div>
+
+<div class="event-card medium">
+  <div class="ev-header">
+    <span class="ev-tag tech">オンチェーン / プロトコル</span>
+    <span class="ev-title">本日（5/25）のオンチェーン主要アップデート</span>
+  </div>
+  <div class="ev-body">
+    複数のプロトコルで本日アップデートが予定：
+    <br>・<strong>Avalanche</strong>：バリデーター向け metalgo v1.13.5 へのアップグレード期限。
+      ACP-176により動的ガスリミットと価格発見機能を追加（UTC 15:00）。
+    <br>・<strong>Berachain</strong>：Bepolia テストネットで PoL Next を有効化。
+      BGT/boost メカニズムを廃止し、sWBERA への排出・インセンティブ移行。
+    <br>・<strong>Upbit</strong>（韓国最大手取引所）：Resolv（$RESOLV）を本日 UTC 06:00 に上場廃止。
+    <br>・<strong>Plasma</strong>：供給量の約0.89%（~3,000万ドル相当）がベスティングアンロック（UTC 11:30）。
+  </div>
+  <div class="ev-impact">
+    <span class="label">価格への影響:</span>
+    <span>Resolv の上場廃止で同トークンに売り圧力。Plasma アンロックはスポット売り圧要因。AVAXはアップグレード後の技術的期待感でやや強気。</span>
+  </div>
+</div>
+
+<div class="event-card medium">
+  <div class="ev-header">
+    <span class="ev-tag tech">資金ローテーション</span>
+    <span class="ev-title">アルトコイン：AI・プライバシーコインへ資金ローテーション</span>
+  </div>
+  <div class="ev-body">
+    BTC dominance 60%でアルトシーズンは遠いが、<strong>AI関連トークン（HYPE・Render等）</strong>と
+    <strong>プライバシーコイン</strong>への選択的資金移動が観察されている。
+    Hyperliquid（HYPE）の急伸がアルトコインへのリスク選好再開を示唆。
+    OpenAI IPO報道が暗号資産×AI の相乗効果への期待を高め、
+    AIエージェント・インフラ系トークンの物語（ナラティブ）が強化されている。
+  </div>
+  <div class="ev-impact">
+    <span class="label">価格への影響:</span>
+    <span>HYPE・RNDR・FET等のAIトークンにカタリスト。ただしBTC dominance高止まりで全面アルトシーズンには至らず、銘柄選別が重要。</span>
+  </div>
+</div>
+
+<!-- ===== CRYPTO TOKEN TABLE ===== -->
+<div class="section-title">主要トークン 影響度マトリクス &amp; 注目アルトコイン</div>
+<div class="grid-2">
+  <div>
+    <table class="impact-table">
+      <thead>
+        <tr>
+          <th>トークン / カテゴリ</th>
+          <th>主因（24h）</th>
+          <th>影響度</th>
+          <th>方向性</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>BTC</strong></td>
+          <td>イラン和平 / ETF流入</td>
+          <td><span class="pill pill-high">高</span></td>
+          <td><span class="pill pill-positive">強気</span></td>
+        </tr>
+        <tr>
+          <td><strong>ETH</strong></td>
+          <td>レンジ継続 / ブレイク未達</td>
+          <td><span class="pill pill-medium">中</span></td>
+          <td><span class="pill pill-neutral">中立</span></td>
+        </tr>
+        <tr>
+          <td><strong>SOL</strong></td>
+          <td>狭レンジ / 回復サイン弱い</td>
+          <td><span class="pill pill-medium">中</span></td>
+          <td><span class="pill pill-neutral">中立</span></td>
+        </tr>
+        <tr>
+          <td><strong>XRP</strong></td>
+          <td>$1.36サポート割れ / 弱気継続</td>
+          <td><span class="pill pill-medium">中</span></td>
+          <td><span class="pill pill-negative">弱気</span></td>
+        </tr>
+        <tr>
+          <td><strong>AI トークン（HYPE等）</strong></td>
+          <td>OpenAI IPO観測 / ナラティブ強化</td>
+          <td><span class="pill pill-high">高</span></td>
+          <td><span class="pill pill-positive">強気</span></td>
+        </tr>
+        <tr>
+          <td><strong>AVAX</strong></td>
+          <td>metalgo v1.13.5 アップグレード</td>
+          <td><span class="pill pill-medium">中</span></td>
+          <td><span class="pill pill-positive">やや強気</span></td>
+        </tr>
+        <tr>
+          <td><strong>ステーブルコイン</strong></td>
+          <td>CLARITY Act 利回り規制論点</td>
+          <td><span class="pill pill-high">高</span></td>
+          <td><span class="pill pill-neutral">注視</span></td>
+        </tr>
+        <tr>
+          <td><strong>RESOLV / Plasma</strong></td>
+          <td>上場廃止 / トークンアンロック</td>
+          <td><span class="pill pill-medium">中</span></td>
+          <td><span class="pill pill-negative">弱気</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <div class="section-title">暗号資産 リスク指標</div>
+    <div class="meter-row">
+      <div class="meter-label">BTC 短期センチメント</div>
+      <div class="meter-bar"><div class="meter-fill" style="width:62%; background:var(--green);"></div></div>
+      <div class="meter-value up">やや強気</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">規制リスク（米国）</div>
+      <div class="meter-bar"><div class="meter-fill" style="width:40%; background:var(--green);"></div></div>
+      <div class="meter-value up">低下中</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">アルトコイン市場</div>
+      <div class="meter-bar"><div class="meter-fill" style="width:35%; background:var(--yellow);"></div></div>
+      <div class="meter-value flat">弱含み</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">ETF機関資金流入</div>
+      <div class="meter-bar"><div class="meter-fill" style="width:75%; background:var(--green);"></div></div>
+      <div class="meter-value up">旺盛</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">地政学感応度</div>
+      <div class="meter-bar"><div class="meter-fill" style="width:80%; background:var(--red);"></div></div>
+      <div class="meter-value down">極めて高</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">流動性（本日）</div>
+      <div class="meter-bar"><div class="meter-fill" style="width:45%; background:var(--yellow);"></div></div>
+      <div class="meter-value flat">薄い</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">AI×暗号資産 ナラティブ</div>
+      <div class="meter-bar"><div class="meter-fill" style="width:78%; background:var(--purple);"></div></div>
+      <div class="meter-value" style="color:var(--purple);">強い</div>
+    </div>
+
+    <div style="margin-top:18px;">
+      <div class="section-title">BTC 価格コンテキスト（2026年）</div>
+      <div style="background:var(--surface2); border-radius:8px; padding:14px; font-size:12px; color:#c9d1d9; line-height:2;">
+        <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:6px; margin-bottom:6px;">
+          <span style="color:var(--muted);">2025年 ATH</span><span class="up" style="font-weight:700;">$126,000+</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:6px; margin-bottom:6px;">
+          <span style="color:var(--muted);">2026年初 安値</span><span class="down">~$60,000</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:6px; margin-bottom:6px;">
+          <span style="color:var(--muted);">5/4 局所高値</span><span class="up">$80,836</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:6px; margin-bottom:6px;">
+          <span style="color:var(--muted);">5/23 直近安値</span><span class="down">&lt; $75,000</span>
+        </div>
+        <div style="display:flex; justify-content:space-between;">
+          <span style="color:var(--muted);">現在（5/25時点）</span><span style="color:var(--orange); font-weight:700;">$76,578</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CRYPTO WEEK AHEAD ===== -->
+<div class="section-title">暗号資産 今週のウォッチリスト</div>
+<div class="grid-3">
+  <div class="calendar-item">
+    <div class="cal-date" style="color:var(--orange);">BTC 価格注目ポイント</div>
+    <ul class="cal-items">
+      <li>$80K 奪回 → 中期トレンド転換サイン</li>
+      <li>$75K 再割れ → ETFサポート確認</li>
+      <li>5/26 ETFフロー再開（米市場）</li>
+      <li>5/28 PCE発表後のリスクオン反応</li>
+      <li>イラン和平合意の有無が最大変数</li>
+    </ul>
+  </div>
+  <div class="calendar-item">
+    <div class="cal-date" style="color:var(--purple);">規制・立法スケジュール</div>
+    <ul class="cal-items">
+      <li>CLARITY Act → 上院本会議採決日程</li>
+      <li>ステーブルコイン法案の倫理条項交渉</li>
+      <li>Warsh FRB議長の暗号資産スタンス確認</li>
+      <li>SEC vs 各DeFiプロジェクトの訴訟動向</li>
+    </ul>
+  </div>
+  <div class="calendar-item">
+    <div class="cal-date" style="color:var(--blue);">注目アルトコイン</div>
+    <ul class="cal-items">
+      <li>HYPE (Hyperliquid) — AI DEX急伸</li>
+      <li>AVAX — v1.13.5アップグレード後</li>
+      <li>RNDR / FET — AI×クリプトナラティブ</li>
+      <li>ETH — $2,140ブレイクアウト監視</li>
+      <li>XRP — $1.40回復で弱気反転確認</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="sources">
+  <div class="section-title">情報ソース</div>
+  <ul class="src-list">
+    <li><a href="https://www.cnbc.com/2026/05/22/stock-market-next-week-outlook-for-may-25-29-2026.html">CNBC — Stock market next week: Outlook for May 25–29, 2026</a></li>
+    <li><a href="https://www.schwab.com/learn/story/stock-market-update-open">Schwab — Stocks Up Early on Iran Talks, Warsh to Take Oath</a></li>
+    <li><a href="https://www.cnbc.com/2026/05/04/stock-market-today-live-updates.html">CNBC — S&amp;P 500 closes at fresh record as stocks catch tailwind from falling oil prices</a></li>
+    <li><a href="https://www.cnbc.com/2026/05/21/oil-iran-peace-deal-uncertainty-inventory-drawdowns-wti-brent-crude.html">CNBC — Oil falls with US-Iran peace talks in focus</a></li>
+    <li><a href="https://gulfbusiness.com/en/2026/iran/oil-prices-us-iran-peace-talks-weekly-losses-hormuz-disruption/">Gulf Business — Deal or deadlock? Oil markets on edge over US-Iran peace talks</a></li>
+    <li><a href="https://finance.yahoo.com/economy/policy/article/kevin-warsh-confirmed-new-fed-chair-as-inflation-kicks-higher-complicating-the-central-banks-path-164303609.html">Yahoo Finance — Kevin Warsh sworn in as Fed chair as inflation worries complicate central bank's path</a></li>
+    <li><a href="https://www.usnews.com/news/national-news/articles/2026-05-15/chosen-to-lower-interest-rates-kevin-warsh-may-find-the-fed-has-other-ideas">U.S. News — Chosen to Lower Interest Rates, Kevin Warsh May Find the Fed Has Other Ideas</a></li>
+    <li><a href="https://www.nomura.co.jp/wealthstyle/article/0607/">野村證券 — 2026年末の日本株見通しを日経平均60,000円に上方修正</a></li>
+    <li><a href="https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-may-21-2026">TheStreet — Stock Market Today (May 21, 2026)</a></li>
+    <li><a href="https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-thursday-may-21-2026-bitcoin-and-ethereum-prices-following-a-similar-path-113159461.html">Yahoo Finance — Bitcoin and Ethereum prices today, May 21, 2026</a></li>
+    <li><a href="https://www.coindesk.com/markets/2026/05/14/bitcoin-stuck-below-usd80-000-as-leveraged-longs-unwind-altcoins-slide">CoinDesk — Bitcoin slips below $80,000 as inflation concerns trigger crypto selloff</a></li>
+    <li><a href="https://intellectia.ai/blog/bitcoin-price-analysis-may-2026">Intellectia — Bitcoin Price Analysis May 2026: BTC Breaks $80K as ETFs See $700M Inflows</a></li>
+    <li><a href="https://www.cnbc.com/2026/05/14/clarity-act-congress-crypto-senate.html">CNBC — Crypto industry scores win as Clarity Act regulation bill clears Senate hurdle</a></li>
+    <li><a href="https://fortune.com/2026/05/13/crypto-clarity-act-senate-markup/">Fortune — The crypto industry's Clarity Act hits a critical juncture</a></li>
+    <li><a href="https://www.kucoin.com/news/articles/crypto-daily-market-report-may-20-2026">KuCoin — Crypto Daily Market Report, May 20, 2026</a></li>
+    <li><a href="https://coinmarketcal.com/en/">CoinMarketCal — Crypto Events Calendar (May 25, 2026)</a></li>
+  </ul>
+</div>
+
+<div class="footer">
+  <span>本レポートは公開情報を基に自動生成されたものです。投資判断の根拠として単独で使用しないでください。</span>
+  <span>Generated: 2026-05-25 | Claude Sonnet 4.6</span>
+</div>
+
+</body>
+</html>
