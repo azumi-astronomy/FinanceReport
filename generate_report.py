@@ -15,14 +15,18 @@ from pathlib import Path
 JST = timezone(timedelta(hours=9))
 today     = datetime.now(JST)
 DATE_STR  = today.strftime('%Y%m%d')           # 例: 20260527
+TIME_STR  = today.strftime('%H%M')             # 例: 0800
 DATE_JA   = today.strftime('%Y年%m月%d日')
 WEEKDAY   = '月火水木金土日'[today.weekday()]
 
 PREV_DATE = (today - timedelta(days=1)).strftime('%Y%m%d')
 NEXT_DATE = (today + timedelta(days=1)).strftime('%Y%m%d')
 
-PREV_FILE  = f'research_report_{PREV_DATE}.html'
-TODAY_FILE = f'research_report_{DATE_STR}.html'
+TODAY_FILE = f'research_report_{DATE_STR}_{TIME_STR}.html'
+
+# 前日レポートは時刻不明なのでglobで検索
+_prev_candidates = sorted(Path(__file__).parent.glob(f'research_report_{PREV_DATE}_????.html'))
+PREV_FILE = _prev_candidates[-1].name if _prev_candidates else f'research_report_{PREV_DATE}_0000.html'
 
 BASE_DIR = Path(__file__).parent
 
@@ -99,16 +103,18 @@ def activate_next_link_in_prev():
 # ── index.html を再生成 ──────────────────────────────────────
 def rebuild_index():
     reports = []
-    for f in sorted(BASE_DIR.glob('research_report_????????.html'), reverse=True):
-        d_str = f.stem.replace('research_report_', '')
+    for f in sorted(BASE_DIR.glob('research_report_????????_????.html'), reverse=True):
+        stem = f.stem.replace('research_report_', '')  # 例: 20260527_0800
         try:
+            d_str, t_str = stem.split('_')
             d = datetime.strptime(d_str, '%Y%m%d').replace(tzinfo=JST)
             reports.append({
                 'date_str': d_str,
+                'time_str': t_str,
                 'display':  d.strftime('%Y年%m月%d日'),
                 'weekday':  '月火水木金土日'[d.weekday()],
                 'file':     f.name,
-                'is_new':   d_str == DATE_STR,
+                'is_new':   f.name == TODAY_FILE,
             })
         except ValueError:
             pass
@@ -116,9 +122,11 @@ def rebuild_index():
     rows = ""
     for r in reports:
         badge = '<span class="badge-new">NEW</span>' if r['is_new'] else ''
+        time_label = f'{r["time_str"][:2]}:{r["time_str"][2:]}'
         rows += (
             f'\n      <tr data-date="{r["date_str"]}">'
-            f'<td><a href="{r["file"]}">{r["display"]}（{r["weekday"]}）{badge}</a></td>'
+            f'<td><a href="{r["file"]}">{r["display"]}（{r["weekday"]}）{badge}</a>'
+            f'<span style="color:#6b7a99;font-size:11px;margin-left:8px;">{time_label}</span></td>'
             f'<td><a href="{r["file"]}" class="btn-open">開く →</a></td></tr>'
         )
 
