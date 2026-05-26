@@ -1,0 +1,58 @@
+今日は__DATE_JA__（__WEEKDAY__曜日）です。
+
+最新のWeb情報を検索し、以下の要件に従ってグローバル市場分析レポートのHTMLファイルを生成してください。
+
+━━ 分析要件 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+■ 対象市場（大分類3つ）
+  ① 株式（日本・米国）  ② 貴金属  ③ 暗号資産
+
+■ 必ず最新情報を検索して確認すること
+  - 本日の日経平均・TOPIX・東証グロース の動向・主要ニュース
+  - 本日の S&P500・Nasdaq・ダウ の動向・主要ニュース
+  - 直近24時間の BTC・ETH・主要アルトコイン の価格と材料
+  - 金・銀・プラチナ の現在値と動向
+  - 24時間以内の地政学・マクロ経済・金融政策イベント
+
+■ 特筆銘柄（日本株10銘柄・米国株10銘柄を必ず選定）
+  日本株：東証プライム・スタンダード・グロース・直近IPO・テーマ株を幅広く調査
+  米国株：NYSE・NASDAQ・直近IPO・AI/半導体/防衛/バイオ等テーマ株を幅広く調査
+
+■ 各銘柄の分析項目（全項目を確認すること）
+  業績・需給・テーマ性・材料・時価総額・流動性・出来高・信用需給
+  決算予定・IR・提携・政府政策・補助金・業界トレンド・チャート
+
+■ 必須ルール
+  ・「事実」「推測・予測」「リスク」を明示的に分けてバッジ/色で区別
+  ・「必ず上がる」「テンバガー確定」等の買い煽り表現は絶対禁止
+  ・冷静なリサーチとして記載。初心者にも分かる言葉で。
+  ・末尾に銘柄を「攻め（高リスク高リターン）」「中間」「守り（ディフェンシブ）」の3タイプに分類
+  ・投資は自己責任である旨の免責事項を末尾に記載
+
+━━ ナビゲーションバー（必須・先頭と末尾の両方に配置） ━━━━━━━
+
+以下のHTMLをレポート先頭（<body>直後）と末尾（</body>直前）の両方に配置:
+
+<nav class="rpt-nav">
+  <a __PREV_NAV__ class="nav-btn nav-prev">← 前日</a>
+  <a href="index.html" class="nav-btn nav-idx">📋 一覧</a>
+  <a class="nav-btn nav-next" id="nav-next" data-placeholder="true" style="opacity:0.35;pointer-events:none;">翌日 →</a>
+</nav>
+
+━━ デザイン要件 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  - ダークテーマ（背景: #0b0e14）
+  - 高品質プロフェッショナルデザイン（カード・バッジ・テーブル・メータバー等のUIを使用）
+  - スマートフォンでも読みやすいレスポンシブ対応（max-width: 1000px, padding等を適切に）
+  - 事実：緑バッジ、推測：黄バッジ、リスク：赤バッジで視覚的に区別
+  - <style>にナビゲーションCSSを必ず含めること:
+    .rpt-nav{display:flex;gap:10px;flex-wrap:wrap;padding:12px 16px;background:#111827;border:1px solid #263352;border-radius:8px;margin-bottom:20px;}
+    .nav-btn{padding:8px 18px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;transition:opacity .2s;}
+    .nav-prev,.nav-next{background:#1d4ed8;color:#fff;}
+    .nav-idx{background:#374151;color:#e8edf5;}
+    .nav-btn:hover{opacity:.8;}
+
+━━ 出力形式 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<!DOCTYPE html> から </html> までの完全なHTMLのみを出力してください。
+コードブロック（```）・説明文・前置き・後書きは一切不要です。HTMLのみ。
