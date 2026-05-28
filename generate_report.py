@@ -51,7 +51,7 @@ def generate_html() -> str:
     print(f"[API] Calling claude-sonnet-4-6 with web_search (max 15 uses)...")
     response = client.messages.create(
         model="claude-sonnet-4-6",
-        max_tokens=16000,
+        max_tokens=24000,
         tools=[{
             "type": "web_search_20250305",
             "name": "web_search",
@@ -103,10 +103,19 @@ def activate_next_link_in_prev():
 # ── index.html を再生成 ──────────────────────────────────────
 def rebuild_index():
     reports = []
-    for f in sorted(BASE_DIR.glob('research_report_????????_????.html'), reverse=True):
-        stem = f.stem.replace('research_report_', '')  # 例: 20260527_0800
+    # 新フォーマット（YYYYMMDD_HHMM）と旧フォーマット（YYYYMMDD）の両方を収集
+    all_files = sorted(
+        list(BASE_DIR.glob('research_report_????????_????.html')) +
+        list(BASE_DIR.glob('research_report_????????.html')),
+        reverse=True
+    )
+    for f in all_files:
+        stem = f.stem.replace('research_report_', '')
         try:
-            d_str, t_str = stem.split('_')
+            if '_' in stem:
+                d_str, t_str = stem.split('_')
+            else:
+                d_str, t_str = stem, ''
             d = datetime.strptime(d_str, '%Y%m%d').replace(tzinfo=JST)
             reports.append({
                 'date_str': d_str,
