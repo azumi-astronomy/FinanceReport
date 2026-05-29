@@ -152,15 +152,64 @@ Web検索で正確な値を確認してください。
         wrong = c.get('レポート値', '')
         correct = c.get('正確な値', '')
         name = c.get('銘柄', '?')
-        if wrong and correct and wrong != correct and wrong in fixed_html:
-            fixed_html = fixed_html.replace(wrong, correct)
-            print(f"[CHK] Fixed [{name}]: {wrong} → {correct}")
+        if not wrong or not correct or wrong == correct:
+            continue
+        fixed_html, ok = _flexible_replace(fixed_html, wrong, correct, name)
+        if ok:
             applied += 1
-        else:
-            print(f"[CHK] Skip [{name}]: '{wrong}' not found or unchanged")
 
     print(f"[CHK] Applied {applied}/{len(corrections)} correction(s)")
     return fixed_html
+
+
+def _flexible_replace(html: str, wrong: str, correct: str, label: str) -> tuple:
+    """フォーマット差異を吸収しながら数値を置換する"""
+
+    # 戦略1: 完全一致
+    if wrong in html:
+        print(f"[CHK] Fixed [{label}]: {wrong} → {correct}")
+        return html.replace(wrong, correct, 1), True
+
+    # 数字部分だけを抽出（カンマ・通貨記号・単位を除去）
+    digits = re.sub(r'[^\d.]', '', wrong)
+    if not digits:
+        print(f"[CHK] Skip [{label}]: no numeric value in '{wrong}'")
+        return html, False
+
+    try:
+        n = int(float(digits))
+    except ValueError:
+        print(f"[CHK] Skip [{label}]: cannot parse number from '{wrong}'")
+        return html, False
+
+    # 戦略2: 数値の表記揺れパターンを順に試す
+    candidates = [
+        f'{n:,}円',   # 4,280円
+        f'¥{n:,}',    # ¥4,280
+        f'￥{n:,}',   # ￥4,280
+        f'{n}円',     # 4280円
+        f'¥{n}',      # ¥4280
+        f'{n:,}',     # 4,280
+        str(n),       # 4280
+    ]
+    for candidate in candidates:
+        if candidate in html:
+            print(f"[CHK] Fixed [{label}] (fuzzy '{candidate}'): → {correct}")
+            return html.replace(candidate, correct, 1), True
+
+    # 戦略3: 正規表現で柔軟にマッチ（カンマ有無・通貨記号有無）
+    num_str = str(n)
+    # 3桁区切りのカンマをオプショナルに
+    flexible = re.sub(r'(\d)(?=(\d{3})+$)', r'\1,?', num_str)
+    pattern = rf'[¥￥$]?\s*{flexible}\s*[円ドル]?'
+    m = re.search(pattern, html)
+    if m:
+        matched = m.group()
+        print(f"[CHK] Fixed [{label}] (regex '{matched}'): → {correct}")
+        return html[:m.start()] + correct + html[m.end():], True
+
+    print(f"[CHK] Skip [{label}]: '{wrong}' not found in HTML (tried {len(candidates)} patterns + regex)")
+    return html, False
 
 
 # ── 前日レポートに「翌日 →」リンクを追加 ───────────────────────
