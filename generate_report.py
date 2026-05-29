@@ -82,6 +82,87 @@ def generate_html() -> str:
     return html
 
 
+# ── 生成レポートの数値検証・修正 ────────────────────────────────
+def verify_and_fix_report(html: str) -> str:
+    """レポートの価格データをWeb検索で検証し、誤りを修正して返す"""
+    import json as json_lib
+
+    client = anthropic.Anthropic()
+
+    # HTMLからテキスト抽出（タグ除去）
+    text = re.sub(r'<[^>]+>', ' ', html)
+    text = re.sub(r'\s+', ' ', text).strip()[:6000]
+
+    print("[CHK] Verifying financial data with web search (max 10)...")
+    with client.messages.stream(
+        model="claude-sonnet-4-6",
+        max_tokens=4000,
+        tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 10}],
+        system=(
+            "あなたは金融データ検証エージェントです。"
+            "指示に従い、JSONのみを出力してください。説明文・コードブロックは不要です。"
+        ),
+        messages=[{"role": "user", "content": f"""
+以下のレポートテキスト（{DATE_JA}付）から株価・指数・暗号資産・貴金属の価格を読み取り、
+Web検索で正確な値を確認してください。
+
+【手順】
+1. レポートから価格データを抽出する
+2. 各データをWeb検索で確認する
+3. 誤りがある項目のみ以下のJSON形式で返す（正しい場合は含めない）
+
+【出力形式】JSONのみ・前後の説明不要
+[
+  {{
+    "銘柄": "銘柄名または指標名",
+    "レポート値": "レポートに記載の値（HTMLで検索できる正確な文字列）",
+    "正確な値": "Web検索で確認した正しい値（同じ形式・単位で）"
+  }}
+]
+
+誤りがない場合: []
+
+レポートテキスト:
+{text}
+"""}]
+    ) as stream:
+        response = stream.get_final_message()
+
+    result_text = "".join(b.text for b in response.content if b.type == "text").strip()
+    print(f"[CHK] Raw result: {result_text[:500]}")
+
+    json_match = re.search(r'\[[\s\S]*\]', result_text)
+    if not json_match:
+        print("[CHK] Could not parse JSON. Skipping corrections.")
+        return html
+
+    try:
+        corrections = json_lib.loads(json_match.group())
+    except json_lib.JSONDecodeError:
+        print("[CHK] JSON parse error. Skipping corrections.")
+        return html
+
+    if not corrections:
+        print("[CHK] All data verified. No corrections needed.")
+        return html
+
+    fixed_html = html
+    applied = 0
+    for c in corrections:
+        wrong = c.get('レポート値', '')
+        correct = c.get('正確な値', '')
+        name = c.get('銘柄', '?')
+        if wrong and correct and wrong != correct and wrong in fixed_html:
+            fixed_html = fixed_html.replace(wrong, correct)
+            print(f"[CHK] Fixed [{name}]: {wrong} → {correct}")
+            applied += 1
+        else:
+            print(f"[CHK] Skip [{name}]: '{wrong}' not found or unchanged")
+
+    print(f"[CHK] Applied {applied}/{len(corrections)} correction(s)")
+    return fixed_html
+
+
 # ── 前日レポートに「翌日 →」リンクを追加 ───────────────────────
 def activate_next_link_in_prev():
     prev_path = BASE_DIR / PREV_FILE
@@ -219,14 +300,17 @@ def main():
     if len(html) < 2000:
         raise RuntimeError(f"Generated HTML too short ({len(html)} chars) — aborting.")
 
-    # 2. 保存
+    # 2. 数値検証・修正
+    html = verify_and_fix_report(html)
+
+    # 3. 保存
     report_path.write_text(html, encoding='utf-8')
     print(f"[OUT] Saved: {TODAY_FILE} ({len(html):,} chars)")
 
-    # 3. 前日レポートの「翌日 →」リンクを有効化
+    # 4. 前日レポートの「翌日 →」リンクを有効化
     activate_next_link_in_prev()
 
-    # 4. index.html 再生成
+    # 5. index.html 再生成
     rebuild_index()
 
     print("=== Complete ===")
