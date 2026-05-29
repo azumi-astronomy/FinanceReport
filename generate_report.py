@@ -49,7 +49,7 @@ def generate_html() -> str:
               .replace('__PREV_NAV__', prev_nav))
 
     print(f"[API] Calling claude-sonnet-4-6 with web_search (max 15 uses)...")
-    response = client.messages.create(
+    with client.messages.stream(
         model="claude-sonnet-4-6",
         max_tokens=24000,
         tools=[{
@@ -63,7 +63,8 @@ def generate_html() -> str:
             "余計なテキスト・コードブロック・説明は一切含めないでください。"
         ),
         messages=[{"role": "user", "content": prompt}],
-    )
+    ) as stream:
+        response = stream.get_final_message()
 
     # テキストブロックのみ結合（tool_use / tool_result ブロックは除外）
     html = "".join(b.text for b in response.content if b.type == "text")
