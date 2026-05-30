@@ -8,6 +8,7 @@ Schedule: 08:00 JST daily via GitHub Actions
 import anthropic
 import os
 import re
+import time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -51,7 +52,7 @@ def generate_html() -> str:
     print(f"[API] Calling claude-sonnet-4-6 with web_search (max 15 uses)...")
     with client.messages.stream(
         model="claude-sonnet-4-6",
-        max_tokens=24000,
+        max_tokens=28000,
         tools=[{
             "type": "web_search_20250305",
             "name": "web_search",
@@ -349,8 +350,15 @@ def main():
     if len(html) < 2000:
         raise RuntimeError(f"Generated HTML too short ({len(html)} chars) — aborting.")
 
-    # 2. 数値検証・修正
-    html = verify_and_fix_report(html)
+    # 2. 数値検証・修正（レート制限回避のため60秒待機）
+    print("[CHK] Waiting 60s to avoid rate limit before verification...")
+    time.sleep(60)
+    try:
+        html = verify_and_fix_report(html)
+    except anthropic.RateLimitError as e:
+        print(f"[CHK] Rate limit hit, skipping verification: {e}")
+    except Exception as e:
+        print(f"[CHK] Verification failed, skipping: {e}")
 
     # 3. 保存
     report_path.write_text(html, encoding='utf-8')
