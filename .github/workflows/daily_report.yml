@@ -5,9 +5,9 @@ name: 📊 Daily Finance Research Report
 #  手動実行は GitHub UI の "Run workflow" から可能
 # ─────────────────────────────────────────────────
 on:
-  schedule:
-    - cron: '0 23 * * *'   # 23:00 UTC = 08:00 JST
-  workflow_dispatch:        # 手動トリガー（テスト・祝日補完用）
+  # schedule:
+  #   - cron: '0 23 * * *'   # 23:00 UTC = 08:00 JST（停止中）
+  workflow_dispatch:        # 手動トリガーのみ
 
 permissions:
   contents: write           # コミット・プッシュに必要
